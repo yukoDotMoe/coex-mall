@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Spatie\FlareClient\Api;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -156,13 +157,15 @@ class ProfileController extends Controller
                 $arrays = Withdraw::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
             case 'bet':
-                $arrays = UserBet::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+                $current = LuckyNumber::where('game_id','<',Carbon::now()->format('YmdHis'))->orderBy('id', 'desc')->first();
+
+                $arrays = UserBet::where([
+                    ['user_id', '=' ,Auth::user()->id],
+                    ['game_id', '<', $current->game_id]
+                ])->orderBy('created_at', 'desc')->get();
                 break;
             case 'recharge':
-                $arrays = Recharge::where([
-                    ['user_id', Auth::user()->id].
-                    ['status', 1]
-                ])->orderBy('created_at', 'desc')->get();
+                $arrays = Recharge::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
         }
         return view('profile.history_play', ['data' => $arrays, 'type' => $tables]);

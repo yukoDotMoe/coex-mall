@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Không tìm thấy tài khoản.',
+    'failed' => 'Sai tài khoản hoặc mật khẩu, vui lòng thử lại sau',
     'password' => 'Sai mật khẩu.',
     'throttle' => 'Quá nhiều lần sai, vui lòng thử lại sau :seconds giây.',
 
