@@ -8,6 +8,8 @@
                 </div>
             </div>
         </div>
+        @include('layouts.movingAnn')
+
     @endsection
     <div class="py-4">
         <div class="text-navbar rounded-[12px] pl-10 pr-8 py-6"
