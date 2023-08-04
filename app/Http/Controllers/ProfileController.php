@@ -159,7 +159,10 @@ class ProfileController extends Controller
                 $arrays = UserBet::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
             case 'recharge':
-                $arrays = Recharge::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+                $arrays = Recharge::where([
+                    ['user_id', Auth::user()->id].
+                    ['status', 1]
+                ])->orderBy('created_at', 'desc')->get();
                 break;
         }
         return view('profile.history_play', ['data' => $arrays, 'type' => $tables]);
