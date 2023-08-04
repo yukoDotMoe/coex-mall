@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/history-play/{tables}', [ProfileController::class, 'historyPlay'])->name('account.history_play');
+    Route::post('/getGame', [ProfileController::class, 'getGameInfo'])->name('account.getGame');
 
 });
 

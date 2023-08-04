@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Banks;
+use App\Models\LuckyNumber;
+use App\Models\Recharge;
 use App\Models\User;
 use App\Models\UserBank;
 use App\Models\UserBet;
 use App\Models\Withdraw;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -150,10 +153,13 @@ class ProfileController extends Controller
         switch ($tables)
         {
             case 'withdraw':
-                $arrays = Withdraw::where('user_id', Auth::user()->id)->get();
+                $arrays = Withdraw::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
             case 'bet':
-                $arrays = UserBet::where('user_id', Auth::user()->id)->get();
+                $arrays = UserBet::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+                break;
+            case 'recharge':
+                $arrays = Recharge::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
         }
         return view('profile.history_play', ['data' => $arrays, 'type' => $tables]);
@@ -192,5 +198,20 @@ class ProfileController extends Controller
         $wallet->changeMoney($amount, '.');
 
         return ApiController::response(200, ['redirect_url' => route('account')], 'Lệnh quy đổi đã được gửi');
+    }
+
+    public function getGameInfo(Request $request)
+    {
+        $game = LuckyNumber::where('game_id', $request->game_id)->first();
+        if (empty($game)) return ApiController::response(404, [], 'Không tìm thấy');
+        $bet = UserBet::where('id', $request->bet_id)->first();
+        return ApiController::response(200, [
+            'phien' => $game->id,
+            'time' => Carbon::createFromFormat('YmdHis', $game->game_id)->format('d/m/Y H:i:s'),
+            'result' => $game->gia_tri,
+            'type' => strtoupper(ApiController::numToGameType($bet->thao_tac)),
+            'bet' => $bet->so_luong,
+            'win' => $bet->so_luong * ApiController::getSetting(ApiController::numToGameType($bet->thao_tac) . '_multiply')
+        ]);
     }
 }

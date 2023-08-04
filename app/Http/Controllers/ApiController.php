@@ -13,15 +13,14 @@ class ApiController extends Controller
 {
     public static function response($code, $data, $msg = null)
     {
-        if ($code <= 200)
-        {
+        if ($code <= 200) {
             return response()->json([
                 'success' => true,
                 'code' => $code,
                 'message' => $msg,
                 'data' => $data
             ]);
-        }else{
+        } else {
             return response()->json([
                 'success' => false,
                 'code' => $code,
@@ -52,14 +51,16 @@ class ApiController extends Controller
         return $reuslt->format('Y-m-d H:i:s');
     }
 
-    public static function generate_random_md5() {
+    public static function generate_random_md5()
+    {
         $random_string = uniqid(mt_rand(), true);
         $md5_hash = md5($random_string);
         $stripped_md5 = substr($md5_hash, 0, 24);
         return $stripped_md5;
     }
 
-    public static function extractNumbersFromString($str) {
+    public static function extractNumbersFromString($str)
+    {
         preg_match_all('/\d+/', $str, $matches);
         return implode('', $matches[0]);
     }
@@ -77,5 +78,27 @@ class ApiController extends Controller
     public static function getFromBankId(string $bank)
     {
         return Banks::where('id', $bank)->first();
+    }
+
+    public static function numToGameType(int $type)
+    {
+        $result = '';
+        switch ($type)
+        {
+            case 1:
+                $result = 'vote';
+                break;
+            case 2:
+                $result = 'like';
+                break;
+            case 3:
+                $result = '5sao';
+                break;
+            case 4:
+                $result = '3sao';
+                break;
+        }
+
+        return $result;
     }
 }

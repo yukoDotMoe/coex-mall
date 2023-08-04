@@ -81,14 +81,14 @@ return [
                 'url' => env('FIREBASE_DATABASE_URL'),
 
                 /*
-                 * As a best practice, a service should have access to only the resources it needs.
+                 * As a best practice, a serviceAccount.json should have access to only the resources it needs.
                  * To get more fine-grained control over the resources a Firebase app instance can access,
-                 * use a unique identifier in your Security Rules to represent your service.
+                 * use a unique identifier in your Security Rules to represent your serviceAccount.json.
                  *
                  * https://firebase.google.com/docs/database/admin/start#authenticate-with-limited-privileges
                  */
                 // 'auth_variable_override' => [
-                //     'uid' => 'my-service-worker'
+                //     'uid' => 'my-serviceAccount.json-worker'
                 // ],
             ],
 

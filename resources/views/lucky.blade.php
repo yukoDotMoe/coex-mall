@@ -111,7 +111,7 @@
         <div class="modal-dialog modal-fullscreen">
             <div class="modal-content css-mbdu2s>
                 <div class="modal-body MuiDialog-paperFullScreen css-1hyl1h2">
-                    <div class="absolute inset-0 top-[72px]"><img
+                    <div class="absolute inset-0 top-[72px] d-flex justify-content-center"><img
                             src="{{ asset('minigame/img/Frame.Tax.5918f4394b94358de880.png') }}" class="h-full">
                     </div>
                     <div class="fixed top-[30%] left-[50%] translate-x-[-50%] opacity-30"><img
@@ -119,7 +119,7 @@
                             class="rounded-full w-[180px]"></div>
                     <button data-dismiss="modal"
                             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-o1bub9"
-                            tabindex="0" type="button">
+                            tabindex="0" type="button" style="top: 9px !important;">
                         <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                              style="fill: white !important;"
                              aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseIcon">
@@ -397,7 +397,7 @@
                 $('#open_gift').attr('data-id', data.id)
                 $('#thongbaokhuyenmai').modal('show')
                 const audioElement = document.getElementById('audioElement');
-                
+
                 canAutoplay(audioElement)
                     .then(() => {
                         console.log('Sound autoplayed successfully.');
