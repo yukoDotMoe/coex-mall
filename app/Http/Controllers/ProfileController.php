@@ -162,7 +162,7 @@ class ProfileController extends Controller
                 $arrays = UserBet::where([
                     ['user_id', '=' ,Auth::user()->id],
                     ['game_id', '<', $current->game_id],
-                    ['trang_thai', '=', 1] // chi chon thang
+                    ['trang_thai', '>', 0] // chi chon thang
                 ])->orderBy('created_at', 'desc')->get();
                 break;
             case 'recharge':
@@ -221,7 +221,7 @@ class ProfileController extends Controller
             'result' => $game->gia_tri,
             'type' => strtoupper(ApiController::numToGameType($bet->thao_tac)),
             'bet' => $bet->so_luong,
-            'win' => $bet->so_luong * ApiController::getSetting(ApiController::numToGameType($bet->thao_tac) . '_multiply')
+            'win' => ($bet->trang_thai == 1) ? $bet->so_luong * ApiController::getSetting(ApiController::numToGameType($bet->thao_tac) . '_multiply') : 0
         ]);
     }
 }

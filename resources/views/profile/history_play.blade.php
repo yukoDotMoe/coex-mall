@@ -93,13 +93,18 @@
                                     </tr>
                                     @break
                                 @case('bet')
-                                    <tr class="MuiTableRow-root css-10wvkr9 gamehistory" data-toggle="modal" data-target="#explain"
+                                    <tr class="MuiTableRow-root css-10wvkr9 gamehistory" data-toggle="modal"
+                                        data-target="#explain"
                                         data-id="{{ $raw->game_id }}" data-bet-id="{{ $raw->id }}">
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
                                             {{ $raw->so_luong }}
                                         </td>
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeMedium css-r0fgiq">
-                                            {{ $raw->so_luong * \App\Http\Controllers\ApiController::getSetting(\App\Http\Controllers\ApiController::numToGameType($raw->thao_tac) . '_multiply') }}
+                                            @if($raw->trang_thai == 1)
+                                                {{ $raw->so_luong * \App\Http\Controllers\ApiController::getSetting(\App\Http\Controllers\ApiController::numToGameType($raw->thao_tac) . '_multiply') }}
+                                            @else
+                                                0
+                                            @endif
                                         </td>
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-r0fgiq">
                                             <div
@@ -132,6 +137,13 @@
                                             @endswitch
                                         </td>
                                     </tr>
+                                    @if(!$raw->bill && !empty($raw->reason))
+                                        <tr class="MuiTableRow-root mt-[-4px] css-10wvkr9">
+                                            <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium pt-0 css-1afg4rq"
+                                                colspan="3">Ghi chú: {{ $raw->reason }}
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @break
                             @endswitch
                         @endforeach
@@ -179,15 +191,15 @@
                                 <div>Kết quả</div>
                                 <div class="inline-flex space-x-1">
                                     <div id="kq1"
-                                        class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
+                                         class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
                                         -
                                     </div>
                                     <div id="kq2"
-                                        class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
+                                         class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
                                         -
                                     </div>
                                     <div id="kq3"
-                                        class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
+                                         class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault w-[24px] h-[24px] text-sm font-medium bg-gradient-to-b from-[#FFF] to-[#D6D6D6] text-primary-main css-1ruz4ejz">
                                         -
                                     </div>
                                 </div>
@@ -224,8 +236,7 @@
                                     </thead>
                                     <tbody class="MuiTableBody-root css-1xnox0e">
                                     <tr class="MuiTableRow-root css-10wvkr9">
-                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq"
-                                            style="color: rgb(121, 98, 241);" id="betType">-
+                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq text-primary" id="betType">-
                                         </td>
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium css-dwdc7h totalBet">
                                             -
@@ -247,6 +258,7 @@
     @section('js')
         <script type="module">
             import {toast} from 'https://cdn.skypack.dev/wc-toast';
+
             $('.gamehistory').click(function () {
                 const roundId = $(this).data('id')
                 const betId = $(this).data('bet-id')
@@ -255,7 +267,7 @@
                     type: 'POST',
                     dataType: 'json', // Specify the expected response type
                     contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify({game_id: roundId, bet_id: betId }), // Use the FormData object with all the fields
+                    data: JSON.stringify({game_id: roundId, bet_id: betId}), // Use the FormData object with all the fields
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -269,6 +281,14 @@
                         $('.totalWin').html(data.data.win)
                         $('#betType').html(data.data.type)
                         $('#phienGame').html(data.data.phien)
+                        if (data.data.win == 0)
+                        {
+                            $('#betType').removeClass('text-primary')
+                            $('#betType').addClass('text-danger')
+                        }else{
+                            $('#betType').removeClass('text-danger')
+                            $('#betType').addClass('text-primary')
+                        }
                         $('#phienTime').html(data.data.time)
                     },
                     error: function (data) {
