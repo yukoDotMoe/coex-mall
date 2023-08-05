@@ -3732,6 +3732,10 @@ and (max-device-width : 1574px)
         padding-left: 27rem !important;
         padding-right: 27rem !important;
     }
+
+    .h-\[140px\] {
+        height: 10rem !important;
+    }
 }
 
 @media only screen
@@ -3755,7 +3759,39 @@ and (max-device-width : 640px)
     }
 }
 
-.css-1afg4rq {
+@media (min-width:320px)  {
+    .h-\[140px\] {
+        height: 9.6rem !important;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 320px) {
+    .h-\[140px\] {
+        height: 8.6rem !important;
+    }
+}
+
+@media only screen
+and (min-device-width : 414px)
+and (max-device-height : 896px)
+and (-webkit-device-pixel-ratio : 3)
+and (orientation : landscape) {
+    .h-\[140px\] {
+        height: 9.6rem !important;
+    }
+}
+
+@media only screen
+and (device-width : 414px)
+and (device-height : 896px)
+and (-webkit-device-pixel-ratio : 2) {
+    .h-\[140px\] {
+        height: 9.6rem !important;
+    }
+}
+
+    .css-1afg4rq {
     font-family: "Lexend Deca";
     font-weight: 400;
     font-size: 0.875rem;
