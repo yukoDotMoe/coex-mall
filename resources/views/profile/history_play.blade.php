@@ -44,7 +44,7 @@
                                         scope="col">
                                         Tổng điểm
                                     </th>
-                                    <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1nnya3x"
+                                    <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1hkbn6i"
                                         scope="col">Thưởng
                                     </th>
                                     <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1hkbn6i"
@@ -56,7 +56,7 @@
                                         scope="col">
                                         Thời gian
                                     </th>
-                                    <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1nnya3x"
+                                    <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1hkbn6i"
                                         scope="col">Số điểm
                                     </th>
                                     <th class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium css-1hkbn6i"
@@ -99,14 +99,14 @@
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
                                             {{ $raw->so_luong }}
                                         </td>
-                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeMedium css-r0fgiq">
+                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeMedium css-dwdc7h">
                                             @if($raw->trang_thai == 1)
                                                 {{ $raw->so_luong * \App\Http\Controllers\ApiController::getSetting(\App\Http\Controllers\ApiController::numToGameType($raw->thao_tac) . '_multiply') }}
                                             @else
                                                 0
                                             @endif
                                         </td>
-                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-r0fgiq">
+                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-dwdc7h">
                                             <div
                                                 class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-31ic4c">
                                                 <span
@@ -120,10 +120,10 @@
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
                                             {{ $raw->created_at->format('d/m/Y') }}
                                         </td>
-                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
+                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-dwdc7h">
                                             {{ $raw->amount }}
                                         </td>
-                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
+                                        <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-dwdc7h">
                                             @switch($raw->status)
                                                 @case(0)
                                                     <div class="text-info">Chờ</div>
