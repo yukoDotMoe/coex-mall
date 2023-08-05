@@ -7,6 +7,7 @@ use App\Models\LuckyNumber;
 use App\Models\Recharge;
 use App\Models\Settings;
 use App\Models\User;
+use App\Models\UserBank;
 use App\Models\UserBet;
 use App\Models\Withdraw;
 use Carbon\Carbon;
@@ -335,7 +336,40 @@ class AdminController extends Controller
     {
         $user = User::where('id', $request->input('idUser'))->first();
         if (empty($user)) return response('không tìm thấy người dùng');
-        return response()->json(['user' => $user->toArray(), 'balance' => $user->balanceFormated()]);
+        return response()->json([
+            'user' => $user->toArray(),
+            'balance' => $user->balanceFormated(),
+            'bank' => $user->getBank()
+        ]);
+    }
+
+    public function lockUser($id)
+    {
+        $user = User::where('id', $id)->first();
+        $user->banned = ($user->banned == 1) ? 0 : 1;
+        $user->save();
+        return redirect()->back();
+    }
+
+    public function updateUser(Request $request)
+    {
+        $user = User::where('id', $request->user_id)->first();
+        $user->username = $request->username;
+        $user->promo_code = $request->promo_code;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->save();
+
+        $bank = UserBank::where('user_id', $user->id)->first();
+        if (!empty($bank))
+        {
+            $bank->bank_id = $request->bank_id;
+            $bank->card_number = $request->card_number;
+            $bank->card_holder = $request->card_holder;
+            $bank->save();
+        }
+
+        return ApiController::response(200, [], 'Cập nhật thành công');
     }
 
     public function withdrawView()

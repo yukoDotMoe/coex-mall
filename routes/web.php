@@ -70,6 +70,8 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
         Route::post('/admin/bai_viet', 'createPost')->name('admin.bai_viet.post');
 
         Route::post('/admin/editBal', 'updateBalance')->name('admin.updateBalance');
+        Route::post('/admin/user_update', 'updateUser')->name('admin.updateUser');
+        Route::get('/admin/user_ban/{id}', 'lockUser')->name('admin.lockUser');
         Route::get('/admin/users_list', 'usersView')->name('admin.users.list');
         Route::get('/admin/find_user', 'liveSearch')->name('admin.users.ajax');
         Route::get('/admin/users_view/{id}', 'findUser')->name('admin.users.find');
