@@ -3759,11 +3759,15 @@ and (max-device-width : 640px)
     }
 }
 
-@media (min-width:320px)  {
+@media only screen
+and (device-width : 375px)
+and (device-height : 812px)
+and (-webkit-device-pixel-ratio : 3) {
     .h-\[140px\] {
-        height: 10rem !important;
+        height: 9.6rem !important;
     }
 }
+
 
 
 @media only screen
