@@ -8,6 +8,8 @@ use App\Models\Settings;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+
 
 class ApiController extends Controller
 {
@@ -100,5 +102,19 @@ class ApiController extends Controller
         }
 
         return $result;
+    }
+
+    public static function cacheVersion($file)
+    {
+        $filePath = public_path($file); // Replace this with the actual file path
+
+        if (File::exists($filePath)) {
+            $lastUpdateTimestamp = File::lastModified($filePath);
+            $lastUpdateTime = date('YmdHis', $lastUpdateTimestamp);
+        } else {
+            $lastUpdateTime = null;
+        }
+
+        return $lastUpdateTime;
     }
 }
