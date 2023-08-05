@@ -3765,12 +3765,6 @@ and (max-device-width : 640px)
     }
 }
 
-/* Small Devices, Tablets */
-@media only screen and (min-width : 320px) {
-    .h-\[140px\] {
-        height: 8.6rem !important;
-    }
-}
 
 @media only screen
 and (min-device-width : 414px)
