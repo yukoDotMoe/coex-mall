@@ -137,10 +137,10 @@
                                             @endswitch
                                         </td>
                                     </tr>
-                                    @if($raw->bill == 0 && !empty($raw->reason))
+                                    @if($raw->bill == 0 && !empty($raw->note))
                                         <tr class="MuiTableRow-root mt-[-4px] css-10wvkr9">
                                             <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium pt-0 css-1afg4rq"
-                                                colspan="3">Ghi chú: {{ $raw->reason }}
+                                                colspan="3">Ghi chú: {{ $raw->note }}
                                             </td>
                                         </tr>
                                     @endif
