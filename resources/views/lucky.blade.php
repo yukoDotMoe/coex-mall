@@ -112,10 +112,11 @@
             <div class="modal fade" id="explain" tabindex="1">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content css-mbdu2s">
-                        <div class="modal-body ">
+                        <div class="modal-body p-0">
                             <button data-dismiss="modal"
                                     class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-o1bub9"
-                                    tabindex="0" type="button">
+                                    tabindex="0" type="button" style="top: 10px;
+    right: 13px;">
                                 <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                                      style="fill: white !important;"
                                      aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseIcon">

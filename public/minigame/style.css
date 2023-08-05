@@ -1662,22 +1662,6 @@ a {
     padding: 8px;
 }
 
-.css-mbdu2s {
-    background-color: rgb(255, 255, 255);
-    color: rgba(0, 0, 0, 0.87);
-    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
-    margin: 32px;
-    position: relative;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    max-height: calc(100% - 64px);
-    max-width: 600px;
-    width: calc(100% - 64px);
-}
-
 .MuiDialog-root .MuiDialogTitle-root {
     background-color: #1e2843;
     background-color: var(--color-text-primary);
@@ -1760,14 +1744,12 @@ a {
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 11px 15px -7px, rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px;
-    margin: 32px;
     position: relative;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     max-height: calc(100% - 64px);
     max-width: 600px;
-    width: calc(100% - 64px);
 }
 
 @media (max-width: 390px) {
@@ -3818,4 +3800,46 @@ and (-webkit-device-pixel-ratio: 2) {
     text-align: left;
     padding: 16px;
     color: rgba(0, 0, 0, 0.87);
+}
+
+.css-ekeie0 {
+    height: 100%;
+    outline: 0px;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.css-919eu4 {
+    position: fixed;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    z-index: -1;
+}
+
+.css-126xj0f {
+    position: fixed;
+    z-index: 1300;
+    inset: 0px;
+}
+
+.css-919eu4 {
+    position: fixed;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    inset: 0px;
+    background-color: rgba(0, 0, 0, 0.5);
+    -webkit-tap-highlight-color: transparent;
+    z-index: -1;
 }
