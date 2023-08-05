@@ -3761,7 +3761,7 @@ and (max-device-width : 640px)
 
 @media (min-width:320px)  {
     .h-\[140px\] {
-        height: 9.6rem !important;
+        height: 10rem !important;
     }
 }
 
