@@ -161,7 +161,8 @@ class ProfileController extends Controller
 
                 $arrays = UserBet::where([
                     ['user_id', '=' ,Auth::user()->id],
-                    ['game_id', '<', $current->game_id]
+                    ['game_id', '<', $current->game_id],
+                    ['trang_thai', '=', 1] // chi chon thang
                 ])->orderBy('created_at', 'desc')->get();
                 break;
             case 'recharge':

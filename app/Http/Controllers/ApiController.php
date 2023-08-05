@@ -86,10 +86,10 @@ class ApiController extends Controller
         switch ($type)
         {
             case 1:
-                $result = 'vote';
+                $result = 'like';
                 break;
             case 2:
-                $result = 'like';
+                $result = 'vote';
                 break;
             case 3:
                 $result = '5sao';

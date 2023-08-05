@@ -23,23 +23,6 @@
         {{ $slot }}
     </div>
 </div>
-<script src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
-<script>
-    const firebaseConfig = {
-        apiKey: "{{ env('FB_KEY') }}",
-        authDomain: "{{ env('FB_AUTH') }}",
-        databaseURL: "{{ env('FB_DB') }}",
-        projectId: "{{ env('FB_PROJECT') }}",
-        storageBucket: "{{ env('FB_STORAGE') }}",
-        messagingSenderId: "{{ env('FB_MSG') }}",
-        appId: "{{ env('FB_APP') }}",
-        measurementId: "{{ env('FB_ANALYTICS') }}"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-</script>
 @yield('jsl')
 </body>
 </html>

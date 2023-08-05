@@ -38,15 +38,6 @@
                         <input aria-invalid="false" id=":r1:" name="password" placeholder="Mật khẩu" type="password"
                                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-1gnht4k"
                                value="">
-                        <div class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1nvf7g0">
-                            <button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1yxmbwk"
-                                    tabindex="0" type="button">
-                                <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
-                                     aria-hidden="true" viewBox="0 0 24 24" data-testid="VisibilityOutlinedIcon">
-                                    <path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"></path>
-                                </svg>
-                                <span class="MuiTouchRipple-root css-w0pj6f"></span></button>
-                        </div>
                         <fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-igs3ac">
                             <legend class="css-ihdtdm"><span class="notranslate">&ZeroWidthSpace;</span></legend>
                         </fieldset>
@@ -68,20 +59,12 @@
                                type="password"
                                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiInputBase-inputAdornedEnd css-1gnht4k"
                                value="">
-                        <div class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1nvf7g0">
-                            <button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1yxmbwk"
-                                    tabindex="0" type="button">
-                                <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
-                                     aria-hidden="true" viewBox="0 0 24 24" data-testid="VisibilityOutlinedIcon">
-                                    <path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"></path>
-                                </svg>
-                                <span class="MuiTouchRipple-root css-w0pj6f"></span></button>
-                        </div>
                         <fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-igs3ac">
                             <legend class="css-ihdtdm"><span class="notranslate">&ZeroWidthSpace;</span></legend>
                         </fieldset>
                     </div>
                 </div>
+                @if(!Cookie::has('referral'))
                 <div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-feqhe6">
                     <div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorWarning MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart css-vjls2h">
                         <div class="MuiInputAdornment-root MuiInputAdornment-positionStart MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1a6giau">
@@ -92,16 +75,15 @@
                                       fill="#200E32"></path>
                             </svg>
                         </div>
-                        <?php $ref = request()->input('ref', ''); ?>
                         <input aria-invalid="false" id=":r6:" name="promo_code" placeholder="Mã giới thiệu"
                                type="text"
-                               class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart css-1ixds2g"
-                               value="{{$ref}}">
+                               class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart css-1ixds2g">
                         <fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-igs3ac">
                             <legend class="css-ihdtdm"><span class="notranslate">&ZeroWidthSpace;</span></legend>
                         </fieldset>
                     </div>
                 </div>
+                @endif
                 <button type="submit"
                         class="submit MuiButtonBase-root MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-root MuiLoadingButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge mx-auto shadow-none rounded-full bg-[#fa6253] css-avm12u"
                         tabindex="0" type="button" id=":r2:">Đăng Ký<span

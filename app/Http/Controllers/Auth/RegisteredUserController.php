@@ -31,8 +31,9 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(Request $request)
     {
+
         return view('auth.register');
     }
 
@@ -50,12 +51,14 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
+        $referral =  $request->cookie('referral') ?? $request->promo_code;
+
         $user = User::create([
             'name' => $request->username,
             'email' => $request->username,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'promo_code' => $request->promo_code
+            'promo_code' => $referral
         ]);
 
         event(new Registered($user));
