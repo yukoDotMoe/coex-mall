@@ -130,7 +130,8 @@
                     <h2 class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-3cs75a" id=":rf:">Điều khoản
                         và quy định
                     </h2>
-                    <div class="MuiDialogContent-root px-12 mb-16 mt-20 z-10 css-1ty026z">
+                    <div class=" d-flex justify-item-center col-3">
+                    <div class="MuiDialogContent-root mb-16 mt-20 z-10 css-1ty026z">
                         <p class="mb-3">
                             <b>Điều khoản và Quy định:</b> Like hoặc Vote theo thứ tự từ trái qua phải bắt đầu từ:
                         </p>
@@ -176,6 +177,7 @@
                         <p class="text-justify mb-3">Sau khi Quý khách hoàn thành nghĩa vụ đóng thuế cho Doanh
                             nghiệp tài khoản của Quý khách sẽ đủ điều kiện xuất khoản.
                         </p>
+                    </div>
                     </div>
                 </div>
             </div>

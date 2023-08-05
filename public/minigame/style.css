@@ -3743,21 +3743,43 @@ and (min-device-width : 360px)
 and (max-device-width : 640px)
 {
     .px-12{
-        padding-left: 3rem !important;
-        padding-right: 3rem !important;
+        padding-left: 7rem !important;
+        padding-right: 7rem !important;
     }
 }
 
 @media (min-width:1281px) {
     .px-12{
-        padding-left: 42rem !important;
-        padding-right: 42rem !important;
+        padding-left: 33rem !important;
+        padding-right: 33rem !important;
     }
 
     .h-\[140px\] {
         height: 9.91rem !important;
     }
 }
+
+@media (min-width:1575px) {
+    .px-12{
+        padding-left: 38rem !important;
+        padding-right: 38rem !important;
+    }
+}
+
+@media (min-width:1576px) {
+    .px-12{
+        padding-left: 41rem !important;
+        padding-right: 41rem !important;
+    }
+}
+
+@media (max-width:521px) {
+    .px-12{
+        padding-left: 8rem !important;
+        padding-right: 8rem !important;
+    }
+}
+
 
 @media only screen
 and (device-width : 375px)
@@ -3766,6 +3788,7 @@ and (-webkit-device-pixel-ratio : 3) {
     .h-\[140px\] {
         height: 9.6rem !important;
     }
+
 }
 
 
@@ -3787,6 +3810,8 @@ and (-webkit-device-pixel-ratio : 2) {
     .h-\[140px\] {
         height: 9.6rem !important;
     }
+
+
 }
 
     .css-1afg4rq {

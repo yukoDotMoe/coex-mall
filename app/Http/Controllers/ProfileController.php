@@ -157,11 +157,9 @@ class ProfileController extends Controller
                 $arrays = Withdraw::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
             case 'bet':
-                $current = LuckyNumber::where('game_id','<',Carbon::now()->format('YmdHis'))->orderBy('id', 'desc')->first();
-
                 $arrays = UserBet::where([
                     ['user_id', '=' ,Auth::user()->id],
-                    ['game_id', '<', $current->game_id],
+                    ['game_id', '<', Carbon::now()->format('YmdHis')],
                     ['trang_thai', '>', 0] // chi chon thang
                 ])->orderBy('created_at', 'desc')->get();
                 break;
