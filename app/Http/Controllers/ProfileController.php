@@ -213,6 +213,7 @@ class ProfileController extends Controller
         $game = LuckyNumber::where('game_id', $request->game_id)->first();
         if (empty($game)) return ApiController::response(404, [], 'Không tìm thấy');
         $bet = UserBet::where('id', $request->bet_id)->first();
+        if ($bet->game_id >= Carbon::now()->format('YmdHis')) return ApiController::response(404, [], 'Không tìm thấy');
         return ApiController::response(200, [
             'phien' => $game->id,
             'time' => Carbon::createFromFormat('YmdHis', $game->game_id)->format('d/m/Y H:i:s'),

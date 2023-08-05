@@ -273,6 +273,11 @@
                     },
                     processData: false, // Set to false, since we are using FormData object
                     success: function (data) {
+                        if(!data.success)
+                        {
+                            $('#explain').modal('toggle');
+                            toast.error('Không tìm thấy')
+                        }
                         const numbersArr = (data.data.result).split('-')
                         $('#kq1').html(numbersArr[0])
                         $('#kq2').html(numbersArr[1])
