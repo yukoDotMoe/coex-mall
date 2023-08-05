@@ -93,9 +93,10 @@
                                     </tr>
                                     @break
                                 @case('bet')
+                                    @php($betId = \App\Http\Controllers\ApiController::gameIdToId($raw->game_id))
                                     <tr class="MuiTableRow-root css-10wvkr9 gamehistory" data-toggle="modal"
                                         data-target="#explain"
-                                        data-id="{{ $raw->game_id }}" data-bet-id="{{ $raw->id }}">
+                                        data-id="{{ $betId }}" data-bet-id="{{ $raw->id }}">
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-1afg4rq">
                                             {{ $raw->so_luong }}
                                         </td>
@@ -110,7 +111,7 @@
                                             <div
                                                 class="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorDefault MuiChip-filledDefault css-31ic4c">
                                                 <span
-                                                    class="MuiChip-label MuiChip-labelSmall css-1pjtbja">{{ \App\Http\Controllers\ApiController::gameIdToId($raw->game_id) }}</span>
+                                                    class="MuiChip-label MuiChip-labelSmall css-1pjtbja">{{ $betId }}</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -154,7 +155,7 @@
         </div>
     </form>
 
-    <div class="modal fade" id="explain" tabindex="1">
+    <div class="modal fade " id="explain" tabindex="1">
         <div class="modal-dialog modal-dialog-centered ">
             <div class="modal-content css-mbdu2s">
                 <div class="modal-body ">

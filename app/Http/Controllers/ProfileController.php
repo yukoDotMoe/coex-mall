@@ -162,6 +162,10 @@ class ProfileController extends Controller
                     ['game_id', '<', Carbon::now()->format('YmdHis')],
                     ['trang_thai', '>', 0] // chi chon thang
                 ])->orderBy('created_at', 'desc')->get();
+                foreach ($arrays as $item) {
+                    $temp = LuckyNumber::where('game_id', $item->game_id)->first();
+                        $item->id_phien = $temp->id;
+                }
                 break;
             case 'recharge':
                 $arrays = Recharge::where([
@@ -210,10 +214,15 @@ class ProfileController extends Controller
 
     public function getGameInfo(Request $request)
     {
-        $game = LuckyNumber::where('game_id', $request->game_id)->first();
-        if (empty($game)) return ApiController::response(404, [], 'Không tìm thấy');
+        $request->validate([
+            'game_id' => 'required|numeric|min:0',
+            'bet_id' => 'required|numeric|min:0',
+        ]);
+        $game = LuckyNumber::where('id', $request->game_id)->first();
+        if (empty($game) ) return ApiController::response(404, [], 'Không tìm thấy.');
+        if ($game->game_id >= Carbon::now()->format('YmdHis')) return ApiController::response(404, [], 'Không tìm thấy.');
         $bet = UserBet::where('id', $request->bet_id)->first();
-        if ($bet->game_id >= Carbon::now()->format('YmdHis')) return ApiController::response(404, [], 'Không tìm thấy');
+        if (empty($bet) ) return ApiController::response(404, [], 'Không tìm thấy.');
         return ApiController::response(200, [
             'phien' => $game->id,
             'time' => Carbon::createFromFormat('YmdHis', $game->game_id)->format('d/m/Y H:i:s'),

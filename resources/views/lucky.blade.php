@@ -107,77 +107,27 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="explain" tabindex="1">
-        <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content css-mbdu2s>
-                <div class="modal-body MuiDialog-paperFullScreen css-1hyl1h2">
-                    <div class="absolute inset-0 top-[72px] d-flex justify-content-center"><img
-                            src="{{ asset('minigame/img/Frame.Tax.5918f4394b94358de880.png') }}" class="h-full">
-                    </div>
-                    <div class="fixed top-[30%] left-[50%] translate-x-[-50%] opacity-30"><img
-                            src="{{ asset('minigame/img/Frame.Star.51850350651321e35085.png') }}"
-                            class="rounded-full w-[180px]"></div>
+    <div class="modal fade pleasefix" id="explain" tabindex="1">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen">
+            <div class="modal-content css-mbdu2s">
+                <div class="modal-body ">
                     <button data-dismiss="modal"
                             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-o1bub9"
-                            tabindex="0" type="button" style="top: 9px !important;">
+                            tabindex="0" type="button">
                         <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false"
                              style="fill: white !important;"
                              aria-hidden="true" viewBox="0 0 24 24" data-testid="CloseIcon">
-                            <path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+                            <path
+                                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
                         </svg>
                         <span class="MuiTouchRipple-root css-w0pj6f"></span>
                     </button>
-                    <h2 class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-3cs75a" id=":rf:">Điều khoản
-                        và quy định
+                    <h2 class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-3cs75a" id=":rf:">Điều khoản và quy định
                     </h2>
-                    <div class=" d-flex justify-item-center col-3">
-                    <div class="MuiDialogContent-root mb-16 mt-20 z-10 css-1ty026z">
-                        <p class="mb-3">
-                            <b>Điều khoản và Quy định:</b> Like hoặc Vote theo thứ tự từ trái qua phải bắt đầu từ:
-                        </p>
-                        <p class="text-justify mb-3"><b>Nhấp chọn LIKE - VOTE:</b> Căn cứ theo đơn đặt vào các vị
-                            trí, ví dụ: Ô số đầu tiên lớn hơn số 5 là LIKE, Ô số đầu tiên nhỏ hơn hoặc bằng 4 là
-                            VOTE.
-                        </p>
-                        <p class="text-justify mb-3"><b>Chọn hạng mục 5 Sao - 3 Sao:</b> Căn cứ theo đơn đặt vào các
-                            vị trí, ví dụ: Ô số cuối cùng hiển thị số 0-2-4-6-8 là 5 Sao, Ô số cuối cùng hiển thị số
-                            1-3-5-7-9 là 3 Sao.
-                        </p>
-                        <p class="text-justify mb-3">COEX MALL nghiêm cấm các hành vi gian lận có hành vi đặt số
-                            điểm cùng một lúc 2 ô sẽ được tính là vi phạm, và phải hoàn thành x5 tổng số điểm được
-                            tính trên mỗi lượt đặt điểm sẽ hoàn thành vòng cược. COEX MALL có quyền thu hồi tất cả
-                            số điểm và tiền thưởng từ mã số ID của Quý khách khi có hành vi gian dối đặt điểm và sử
-                            dụng phần mềm hỗ trợ.
-                        </p>
-                        <p class="text-justify mb-3">Nếu Quý khách có bất kì kiến nghị nào vui lòng chọn mục CSKH để
-                            được nhân viên kịp thời hỗ trợ tư vấn.
-                        </p>
-                        <p class="font-bold mb-3">Thuế:</p>
-                        <p class="text-justify mb-3">Để đảm bảo được COEX MALL hoạt động lâu dài, gắn bó cùng Quý
-                            khách hàng cũng như đóng thuế cho Bộ Công Thương, đồng hành cùng các đơn vị tài trợ, khi
-                            Quý khách được nhận hộp quà huyền bí từ hệ thống vui lòng thực hiện nghĩa vụ đóng thuế
-                            như sau:
-                        </p>
-                        <p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức từ <span
-                                class="text-navbar">199.000 điểm tương ứng 199.000.000 VNĐ</span> vui lòng đóng
-                            mức thuế 15% / tổng số điểm Quý khách rút ra.
-                        </p>
-                        <p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức từ <span
-                                class="text-navbar">200.000 điểm - 399.000 điểm</span> vui lòng đóng mức thuế
-                            20% / tổng số điểm Quý khách rút ra.
-                        </p>
-                        <p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức trên <span
-                                class="text-navbar">400.000 điểm tương ứng 400.000.000 VNĐ</span> vui lòng đóng
-                            mức thuế 30% / tổng số điểm Quý khách rút ra.
-                        </p>
-                        <p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức trên <span
-                                class="text-navbar">1.199.000 điểm tương ứng 1.199.000.000 VNĐ</span> cần đóng
-                            thuế TNCN 7 - 10% / tổng số điểm Quý khách rút ra.
-                        </p>
-                        <p class="text-justify mb-3">Sau khi Quý khách hoàn thành nghĩa vụ đóng thuế cho Doanh
-                            nghiệp tài khoản của Quý khách sẽ đủ điều kiện xuất khoản.
-                        </p>
-                    </div>
+                    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiDialog-paperFullScreen css-1hyl1h2">
+                        <div class="absolute inset-0"><img src="{{ asset('minigame/img/Frame.Tax.5918f4394b94358de880.png') }}" class="h-full"></div>
+                        <div class="fixed top-[30%] left-[50%] translate-x-[-50%] opacity-30"><img src="{{ asset('minigame/img/Frame.Star.51850350651321e35085.png') }}" class="rounded-full w-[180px]"></div>
+                        <div class="MuiDialogContent-root px-12 mb-16 mt-20 z-10 css-1ty026z"><p class="mb-3"><b>Điều khoản và Quy định:</b> Like hoặc Vote theo thứ tự từ trái qua phải bắt đầu từ:</p><p class="text-justify mb-3"><b>Nhấp chọn LIKE - VOTE:</b> Căn cứ theo đơn đặt vào các vị trí, ví dụ: Ô số đầu tiên lớn hơn số 5 là LIKE, Ô số đầu tiên nhỏ hơn hoặc bằng 4 là VOTE.</p><p class="text-justify mb-3"><b>Chọn hạng mục 5 Sao - 3 Sao:</b> Căn cứ theo đơn đặt vào các vị trí, ví dụ: Ô số cuối cùng hiển thị số 0-2-4-6-8 là 5 Sao, Ô số cuối cùng hiển thị số 1-3-5-7-9 là 3 Sao.</p><p class="text-justify mb-3">FATION MALL nghiêm cấm các hành vi gian lận có hành vi đặt số điểm cùng một lúc 2 ô sẽ được tính là vi phạm, và phải hoàn thành x5 tổng số điểm được tính trên mỗi lượt đặt điểm sẽ hoàn thành vòng cược. FATION MALL có quyền thu hồi tất cả số điểm và tiền thưởng từ mã số ID của Quý khách khi có hành vi gian dối đặt điểm và sử dụng phần mềm hỗ trợ.</p><p class="text-justify mb-3">Nếu Quý khách có bất kì kiến nghị nào vui lòng chọn mục CSKH để được nhân viên kịp thời hỗ trợ tư vấn.</p><p class="font-bold mb-3">Thuế:</p><p class="text-justify mb-3">Để đảm bảo được FATION MALL hoạt động lâu dài, gắn bó cùng Quý khách hàng cũng như đóng thuế cho Bộ Công Thương, đồng hành cùng các đơn vị tài trợ, khi Quý khách được nhận hộp quà huyền bí từ hệ thống vui lòng thực hiện nghĩa vụ đóng thuế như sau:</p><p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức từ <span class="text-navbar">199.000 điểm tương ứng 199.000.000 VNĐ</span> vui lòng đóng mức thuế 15% / tổng số điểm Quý khách rút ra.</p><p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức từ <span class="text-navbar">200.000 điểm - 399.000 điểm</span> vui lòng đóng mức thuế 20% / tổng số điểm Quý khách rút ra.</p><p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức trên <span class="text-navbar">400.000 điểm tương ứng 400.000.000 VNĐ</span> vui lòng đóng mức thuế 30% / tổng số điểm Quý khách rút ra.</p><p class="text-justify mb-3">- Đối với Quý khách hàng rút hạn mức trên <span class="text-navbar">1.199.000 điểm tương ứng 1.199.000.000 VNĐ</span> cần đóng thuế TNCN 7 - 10% / tổng số điểm Quý khách rút ra.</p><p class="text-justify mb-3">Sau khi Quý khách hoàn thành nghĩa vụ đóng thuế cho Doanh nghiệp tài khoản của Quý khách sẽ đủ điều kiện xuất khoản.</p></div>
                     </div>
                 </div>
             </div>
