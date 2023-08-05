@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        $referral =  $request->cookie('referral') ?? $request->promo_code;
+        $referral =  $request->cookie('referral');
 
         $user = User::create([
             'name' => $request->username,
