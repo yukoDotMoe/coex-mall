@@ -65,6 +65,7 @@ class crawlBankInfo extends Command
                     'name' => $name,
                     'logo' => $logopath,
                     'order' => 0,
+                    'shortname' => $bank['shortName']
                 ]
             );
             $this->info('🙋‍♂️ ] -> Hello, ' . $name);

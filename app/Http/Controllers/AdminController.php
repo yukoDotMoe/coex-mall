@@ -13,6 +13,7 @@ use App\Models\Withdraw;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use DB;
 
@@ -126,17 +127,22 @@ class AdminController extends Controller
 
     public function usersView()
     {
-        $users = User::paginate(5);
+        $users = User::all();
         return view('admin.auth.users.list', ['users' => $users]);
     }
 
     public function liveSearch(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
-        $users = User::where('username', 'like', '%' . $searchTerm . '%')
-            ->orWhere('promo_code', 'like', '%' . $searchTerm . '%')
-            ->orWhere('phone', 'like', '%' . $searchTerm . '%')
-            ->get();
+        if (!empty($searchTerm))
+        {
+            $users = User::where('username', 'like', '%' . $searchTerm . '%')
+                ->orWhere('promo_code', 'like', '%' . $searchTerm . '%')
+                ->orWhere('phone', 'like', '%' . $searchTerm . '%')
+                ->get();
+        }else{
+            $users = User::all();
+        }
         return view('admin.auth.users.liveSearch', compact('users'));
     }
 
@@ -193,9 +199,9 @@ class AdminController extends Controller
     public function findUser($id)
     {
         $user = User::where('id', $id)->first();
-        $trans = UserBet::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(5);
-        $recharge = Recharge::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(5);
-        $withdraw = Withdraw::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(5);
+        $trans = UserBet::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        $recharge = Recharge::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        $withdraw = Withdraw::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('admin.auth.users.view', ['user' => $user, 'games' => $trans, 'recharge' => $recharge, 'withdraw' => $withdraw]);
     }
 
@@ -271,7 +277,7 @@ class AdminController extends Controller
             'recharge.status'
         )
             ->join('users', 'recharge.user_id', '=', 'users.id')
-            ->orderBy('created_at', 'desc')->paginate(10);
+            ->orderBy('created_at', 'desc')->get();
         return view('admin.auth.recharge', ['recharges' => $recharges]);
     }
 
@@ -351,10 +357,17 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function changePassword(Request $request)
+    {
+        $user = User::where('id', $request->user_id)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return ApiController::response(200, [], 'Thay đổi mật khẩu thành công');
+    }
+
     public function updateUser(Request $request)
     {
         $user = User::where('id', $request->user_id)->first();
-        $user->username = $request->username;
         $user->promo_code = $request->promo_code;
         $user->address = $request->address;
         $user->phone = $request->phone;
@@ -409,5 +422,40 @@ class AdminController extends Controller
         }
 
         return ApiController::response(200, [], 'Cập nhật thành công');
+    }
+
+    public function findWithdraw(Request $request)
+    {
+        $result = Withdraw::where('id', $request->wid)->first();
+        $user = User::where('id', $result->user_id)->first();
+        $finalAmount = $result->amount * 1000;
+        $bank = ApiController::getFromBankId($result->bank);
+        $result['bank'] = $bank->code . ' | ' . $bank->name;
+        $qrImg = 'https://img.vietqr.io/image/'. $bank->shortname .'-'. $result->card_number .'-compact.jpg?amount=' . $finalAmount . '&addInfo=Tra%20luong%20' . $result->user_id . '' . $user->promo_code;
+        return ApiController::response(200, [
+            'data' => $result,
+            'final' => number_format($finalAmount, 0, '', ','),
+            'qr' => $qrImg
+        ]);
+    }
+
+    public function gameManagerView()
+    {
+        $list = UserBet::join('users', 'lich_su_danh_gia.user_id', '=', 'users.id')
+            ->join('lich_su_danh_gia_game', 'lich_su_danh_gia.game_id', '=', 'lich_su_danh_gia_game.game_id')
+            ->select(
+                'lich_su_danh_gia.*',
+                'users.promo_code as dai_li',
+                'users.username as username',
+                'lich_su_danh_gia_game.id as phien',
+                'lich_su_danh_gia_game.gia_tri as ketqua_phien',
+            )
+            ->orderBy('created_at', 'desc')->get();
+        return view('admin.auth.gameManager', ['data' => $list]);
+    }
+
+    public function gameManager(Request $request)
+    {
+
     }
 }

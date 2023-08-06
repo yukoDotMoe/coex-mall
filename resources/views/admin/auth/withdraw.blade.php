@@ -3,9 +3,6 @@
 
 @section('content')
     <table class="table table-striped display"  id="myTable">
-        <div class="form-group">
-            <input type="text" class="form-control" id="searchInput" placeholder="Tìm theo ID  ...">
-        </div>
         <thead>
         <tr>
             <th scope="col">ID User</th>
@@ -17,7 +14,6 @@
             <th scope="col">STK</th>
             <th scope="col">Chủ TK</th>
             <th scope="col">Thời gian</th>
-            <th scope="col">Ghi chú</th>
             <th scope="col">Thao tác</th>
         </tr>
         </thead>
@@ -25,7 +21,7 @@
         @foreach($withdraws as $wd)
             <tr>
                 <th>{{ $wd->user_id }}</th>
-                <th>{{ $wd->username }}</th>
+                <th><a class="link-underline link-underline-opacity-0" href="{{ route('admin.users.find', $wd->user_id) }}">{{ $wd->username }}</a></th>
                 <th>{{ $wd->promo_code }}</th>
                 <th>{{ $wd->amount }}</th>
                 <th>
@@ -48,7 +44,6 @@
                 <th>{{ $wd->card_number }}</th>
                 <th>{{ $wd->card_holder }}</th>
                 <th>{{ $wd->created_at->format('Y-m-d H:i:s') }}</th>
-                <th>{{ ($wd->note == '.') ? null : $wd->note }}</th>
                 <th>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button type="button" class="btn btn-success action" data-action="1" data-id="{{ $wd->id }}" @if($wd->status > 0) disabled @endif>Duyệt</button>
@@ -66,6 +61,9 @@
     <script type="module">
         import {toast} from 'https://cdn.skypack.dev/wc-toast'
         window.addEventListener('DOMContentLoaded', function () {
+            $(document).ready(function() {
+                $('#myTable').DataTable();
+            });
             $('#searchInput').on('keyup', function() {
                 let searchTerm = $(this).val().toLowerCase();
                 if (searchTerm.length >= 2) {
@@ -99,7 +97,7 @@
                     },
                     processData: false, // Set to false, since we are using FormData object
                     success: function (data) {
-                        toast.success(`Thu hồi thành công`);
+                        toast.success(data.message);
                         location.reload()
                     },
                     error: function (data) {

@@ -1,4 +1,4 @@
-<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+<div class="sidebar sidebar-dark sidebar-fixed sidebar-narrow-unfoldable" id="sidebar">
     <div class="sidebar-brand d-none d-md-flex">
         <img class="sidebar-brand-full" src="{{ asset('logo.png') }}" style="    height: 2rem !important;" alt="" srcset="">
         <i class="sidebar-brand-narrow"><i class="fa-solid fa-cart-arrow-down"></i></i>
@@ -18,6 +18,8 @@
                 <i class="nav-icon fa-solid fa-cash-register"></i> Quản lý nạp tiền</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.withdraw') }}">
                 <i class="nav-icon fa-solid fa-money-bill-wave"></i> Quản lý rút tiền</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.game_manager') }}">
+                <i class="nav-icon fa-solid fa-masks-theater"></i> Quản lý đánh giá</a></li>
 
     </ul>
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

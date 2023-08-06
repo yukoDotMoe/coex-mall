@@ -69,8 +69,10 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
         Route::get('/admin/bai_viet', 'postview')->name('admin.bai_viet');
         Route::post('/admin/bai_viet', 'createPost')->name('admin.bai_viet.post');
 
+        Route::post('/admin/user_withdraw', 'findWithdraw')->name('admin.findWithdraw');
         Route::post('/admin/editBal', 'updateBalance')->name('admin.updateBalance');
         Route::post('/admin/user_update', 'updateUser')->name('admin.updateUser');
+        Route::post('/admin/chage_pass', 'changePassword')->name('admin.changePass');
         Route::get('/admin/user_ban/{id}', 'lockUser')->name('admin.lockUser');
         Route::get('/admin/users_list', 'usersView')->name('admin.users.list');
         Route::get('/admin/find_user', 'liveSearch')->name('admin.users.ajax');
@@ -92,6 +94,9 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
         Route::post('/admin/withdraw', 'updateWithdraw')->name('admin.withdraw.post');
 
         Route::post('/admin/find_by_id', 'findById')->name('admin.findById');
+
+        Route::get('/admin/game_manager', 'gameManagerView')->name('admin.game_manager');
+
 
         Route::get('admin/logout', 'logout')->name('admin.logout');
     });

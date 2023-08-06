@@ -7,9 +7,6 @@
         <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-warning">Nạp khuyến mại</button>
     </div>
     <table class="table table-striped display"  id="myTable">
-        <div class="form-group">
-            <input type="text" class="form-control" id="searchInput" placeholder="Tìm theo ID  ...">
-        </div>
         <thead>
         <tr>
             <th scope="col">ID User</th>
@@ -27,7 +24,7 @@
         @foreach($recharges as $rc)
             <tr>
                 <th>{{ $rc->user_id }}</th>
-                <th>{{ $rc->username }}</th>
+                <th><a class="link-underline link-underline-opacity-0" href="{{ route('admin.users.find', $rc->user_id) }}">{{ $rc->username }}</a></th>
                 <th>{{ $rc->promo_code ?? '-' }}</th>
                 <th>{{ $rc->amount }}</th>
                 <th>@switch($rc->status)
@@ -51,15 +48,16 @@
                 <th>{{ $rc->created_at->format('Y-m-d H:i:s') }}</th>
                 <th>{{ ($rc->note == '.') ? null : $rc->note }}</th>
                 <th>
+                    @if($rc->status <= 1)
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-outline-danger revoke" data-id="{{ $rc->id }}" @if($rc->status == 2) disabled @endif>Thu hồi</button>
+                        <button type="button" class="btn btn-danger text-white fw-bold revoke" data-id="{{ $rc->id }}">Thu hồi</button>
                     </div>
+                    @endif
                 </th>
             </tr>
         @endforeach
         </tbody>
     </table>
-    {{ $recharges->links() }}
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -155,6 +153,9 @@
     <script type="module">
         import {toast} from 'https://cdn.skypack.dev/wc-toast'
         window.addEventListener('DOMContentLoaded', function () {
+            $(document).ready(function() {
+                $('#myTable').DataTable();
+            });
             function formatNumber(n, dp)
             {
                 var w = n.toFixed(dp),
