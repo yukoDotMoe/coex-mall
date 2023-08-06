@@ -139,7 +139,7 @@
             })
 
             function change(id, row, oldType, newType) {
-                var numbers = $(`.numbers.id-${id}`).text().split('-')
+                var numbers = $(`.numbers.id-${id}`).first().text().split('-')
                 var newNumber;
                 if (row === 1)
                 {
