@@ -161,7 +161,6 @@
                 newNumber = numbers.join('-')
                 postChange(id, newNumber)
                 $(`.numbers.id-${id}`).html(newNumber)
-                if (id === $('#gameResult').attr('data-id')) $('#gameResult').html(newNumber)
             }
 
             function postChange(id, newNumber)
@@ -180,6 +179,7 @@
                     contentType: false,
                     success: function (data) {
                         toast.success('Cập nhật thành công')
+                        location.reload()
                     },
                     error: function (data) {
                         toast.success('Thất bại')
