@@ -334,6 +334,7 @@ class AdminController extends Controller
         $user = User::where('id', $recharge->user_id)->first();
         $wallet = $user->getWallet();
         $recharge->update(['status' => 2]);
+        if ($recharge->amount > $user->balance()) $recharge->amount = $user->balance();
         $wallet->changeMoney($recharge->amount, 'Thu hồi lệnh nạp tiền ' . $recharge->id);
         return ApiController::response(200, [], 'Thu hồi thành công');
     }
