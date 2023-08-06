@@ -27,10 +27,10 @@
                 <td>
                     @switch($row->thao_tac)
                         @case(1)
-                            <span class="badge text-bg-primary" style="background-color: #f73007 !important;">Vote</span>
+                            <span class="badge text-bg-primary" style="background-color: #f73007 !important;">Like</span>
                             @break
                         @case(2)
-                            <span class="badge text-bg-primary" style="background-color: #00af52 !important;">Like</span>
+                            <span class="badge text-bg-primary" style="background-color: #00af52 !important;">Vote</span>
                             @break
                         @case(3)
                             <span class="badge text-bg-primary" style="background-color: #009cd9 !important;">5 Sao</span>
