@@ -61,7 +61,6 @@ class LuckyNumberController extends Controller
             $request->validate([
                 'sideChoosed' => 'required|string',
                 'amount' => 'required|numeric',
-                'gameid' => 'required|numeric'
             ]);
 
             $side = $request->sideChoosed;
