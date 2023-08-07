@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LuckyNumber;
 use App\Models\User;
 use App\Models\UserBet;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -65,7 +66,8 @@ class LuckyNumberController extends Controller
 
             $side = $request->sideChoosed;
             $amount = $request->amount;
-            $game_id = $request->gameid;
+            $currentGame = LuckyNumber::where('game_id','<',Carbon::now()->format('YmdHis'))->orderBy('id', 'desc')->first()->id;
+            $game_id = LuckyNumber::where('id', $currentGame+1)->first()->game_id;
 
             if ($amount > Auth::user()->balance()) return ApiController::response(404, [], 'Số dư không đủ.');
 

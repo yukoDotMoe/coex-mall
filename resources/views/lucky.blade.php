@@ -268,7 +268,6 @@
 
     <input id="side" value="" hidden>
     <input id="amount" value="" hidden>
-    <input id="game_id" value="" hidden>
     <input type="hidden" id="auth_token" value="{{App\Services\Game::getTokenUserKey()}}">
     <style>
         .modal-background {
@@ -515,7 +514,6 @@
             $('.css-1n8uu98').click(function () {
                 const sideChoosed = $('#side').val();
                 const amount = $('#amountRate').val();
-                const game_id = $('#game_id').val();
                 var _this = $('.submit');
                 setTimeout(function () {
                     _this.html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
@@ -532,7 +530,6 @@
                     data: JSON.stringify({
                         sideChoosed: sideChoosed,
                         amount: amount,
-                        gameid: game_id
                     }),
                     processData: false,
                     success: function (data) {
