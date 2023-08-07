@@ -70,7 +70,7 @@ class GenerateRound extends Command
                 }
 
                 DB::beginTransaction();
-                if (in_array($user->thao_tac, $game))
+                if (strpos($game, $user->thao_tac))
                 {
                     $user->update(['trang_thai' => 1]);
                     $wallet = User::where('id', $user->user_id)->first()->getWallet();
@@ -96,21 +96,18 @@ class GenerateRound extends Command
 
         $numbers_array = explode("-", $game_bet->gia_tri);
 
-        $like = '5,6,7,8,9';
-        $sao_5 = '0,2,4,6,8';
-
-        if (strpos($like, $numbers_array[0]))
+        if ($numbers_array[0] >= 5)
         {
-            $win_type[] = 1;
+            $win_type = "1";
         }else{
-            $win_type[] = 2;
+            $win_type = "2";
         }
 
-        if (strpos($sao_5, $numbers_array[2]))
+        if (($numbers_array[2] % 2) == 0)
         {
-            $win_type[] = 3;
+            $win_type .= ",3";
         }else{
-            $win_type[] = 4;
+            $win_type .= ",4";
         }
 
         return $win_type;
