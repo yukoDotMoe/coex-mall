@@ -96,17 +96,17 @@ class GenerateRound extends Command
 
         $numbers_array = explode("-", $game_bet->gia_tri);
 
-        $like = [5,6,7,8,9];
-        $sao_5 = [0,2,4,6,8];
+        $like = '5,6,7,8,9';
+        $sao_5 = '0,2,4,6,8';
 
-        if (array_search($numbers_array[0], $like))
+        if (strpos($like, $numbers_array[0]))
         {
             $win_type[] = 1;
         }else{
             $win_type[] = 2;
         }
 
-        if (array_search($numbers_array[2], $sao_5))
+        if (strpos($sao_5, $numbers_array[2]))
         {
             $win_type[] = 3;
         }else{
