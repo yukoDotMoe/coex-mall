@@ -2,6 +2,8 @@
 @extends('admin.layout')
 
 @section('content')
+    <x-auto-reload-checkbox />
+
     <table class="table table-striped display" id="myTable">
         <thead>
         <tr>
@@ -108,7 +110,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thay đổi mật khẩu: <span id="modalUsername"></span></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thay đổi mật khẩu: <span id="passModalUsername"></span> (<span id="passModalId"></span>)</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -133,7 +135,9 @@
         window.addEventListener('DOMContentLoaded', function () {
 
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                $('#myTable').DataTable({
+                    "order": [[ 0, 'desc' ]]
+                });
             });
             $('.userEdit').click(function (e) {
                 $('#modalUid').val('')
@@ -167,6 +171,30 @@
                         $('#bankSelect').val(data.bank.bank_id)
                         $('#bankNumber').val(data.bank.card_number)
                         $('#bankHolder').val(data.bank.card_holder)
+                    },
+                    error: function (data) {
+                        toast.error('Không tìm thấy');
+                    },
+                });
+            })
+
+            $('.passwordChange').click(function (e) {
+                e.preventDefault()
+                $('#passModalId').html('')
+                $('#passModalUsername').html('')
+                $.ajax({
+                    url: "{{route('admin.findById')}}",
+                    type: 'POST',
+                    dataType: 'json', // Specify the expected response type
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({idUser:$(this).data('id') }), // Use the FormData object with all the fields
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    processData: false, // Set to false, since we are using FormData object
+                    success: function (data) {
+                        $('#passModalId').html(data.user.id)
+                        $('#passModalUsername').html(data.user.username)
                     },
                     error: function (data) {
                         toast.error('Không tìm thấy');

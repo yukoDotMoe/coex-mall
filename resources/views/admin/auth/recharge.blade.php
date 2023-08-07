@@ -2,6 +2,8 @@
 @extends('admin.layout')
 
 @section('content')
+    <x-auto-reload-checkbox />
+
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">Nạp tiền</button>
         <button data-bs-toggle="modal" data-bs-target="#exampleModal1" type="button" class="btn btn-warning">Nạp khuyến mại</button>
@@ -9,13 +11,13 @@
     <table class="table table-striped display"  id="myTable">
         <thead>
         <tr>
+            <th scope="col">Thời gian</th>
             <th scope="col">ID User</th>
             <th scope="col" style="width: 10%">Username</th>
             <th scope="col" style="width: 10%">Đại lí</th>
             <th scope="col">Giá trị</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Hóa đơn</th>
-            <th scope="col">Thời gian</th>
             <th scope="col" style="width: 20%">Ghi chú</th>
             <th scope="col">Thao tác</th>
         </tr>
@@ -23,6 +25,7 @@
         <tbody>
         @foreach($recharges as $rc)
             <tr>
+                <th>{{ $rc->created_at->format('Y-m-d H:i:s') }}</th>
                 <th>{{ $rc->user_id }}</th>
                 <th><a class="link-underline link-underline-opacity-0" href="{{ route('admin.users.find', $rc->user_id) }}">{{ $rc->username }}</a></th>
                 <th>{{ $rc->promo_code ?? '-' }}</th>
@@ -45,12 +48,11 @@
                     @else
                         <span class="badge rounded-pill text-bg-secondary">Không</span>
                     @endif</th>
-                <th>{{ $rc->created_at->format('Y-m-d H:i:s') }}</th>
                 <th>{{ ($rc->note == '.') ? null : $rc->note }}</th>
                 <th>
                     @if($rc->status <= 1)
                     <div class="btn-group" role="group">
-                        <button type="button" class="btn btn-danger text-white fw-bold revoke" data-id="{{ $rc->id }}">Thu hồi</button>
+                        <button type="button" class="btn btn-danger text-white fw-bold revoke" data-id="{{ $rc->id }}"><i class="fa-solid fa-clock-rotate-left"></i> Thu hồi</button>
                     </div>
                     @endif
                 </th>
@@ -154,7 +156,9 @@
         import {toast} from 'https://cdn.skypack.dev/wc-toast'
         window.addEventListener('DOMContentLoaded', function () {
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                $('#myTable').DataTable({
+                    "order": [[ 0, 'desc' ]]
+                });
             });
             function formatNumber(n, dp)
             {

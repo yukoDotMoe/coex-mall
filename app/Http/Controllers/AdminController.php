@@ -65,6 +65,7 @@ class AdminController extends Controller
     {
         $row = LuckyNumber::where('id', $request->id)->first();
         if (empty($row)) return ApiController::response(404, [], 'Không tìm thấy game');
+        if ($row->game_id <= Carbon::now()->format('YmdHis')) return ApiController::response(401, [], 'Game đã sổ rồi');
         $row->update(['gia_tri' => $request->gia_tri]);
         return ApiController::response(200, [], 'Thành công');
     }
@@ -199,9 +200,9 @@ class AdminController extends Controller
     public function findUser($id)
     {
         $user = User::where('id', $id)->first();
-        $trans = UserBet::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
-        $recharge = Recharge::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
-        $withdraw = Withdraw::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
+        $trans = UserBet::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $recharge = Recharge::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
+        $withdraw = Withdraw::where('user_id', $user->id)->orderBy('created_at', 'desc')->get();
         return view('admin.auth.users.view', ['user' => $user, 'games' => $trans, 'recharge' => $recharge, 'withdraw' => $withdraw]);
     }
 

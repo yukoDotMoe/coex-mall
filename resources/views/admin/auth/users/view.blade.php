@@ -8,7 +8,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">LỊCH SỬ ĐÁNH GIÁ</h5>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="historyDanhGia">
                             <thead>
                             <tr>
                                 <th scope="col">Phiên</th>
@@ -58,7 +58,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $games->links() }}
                     </div>
                 </div>
             </div>
@@ -68,7 +67,7 @@
                     <div class="card-body">
                         <h5 class="card-title">LỊCH SỬ NẠP </h5>
                         <small class="text-danger fw-bold d-flex justify-content-center">TRẠNG THÁI ĐÃ THAY ĐỔI KHÔNG HOÀN TÁC ĐƯỢC</small>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="historyNap">
                             <thead>
                             <tr>
                                 <th scope="col">Thời gian</th>
@@ -81,7 +80,12 @@
                             @foreach($recharge as $plus)
                                 <tr>
                                     <td>{{ $plus->created_at->format('d/m/Y H:m:i') }}</td>
-                                    <td>{{ $plus->amount }}</td>
+                                    <td>{{ $plus->amount }}
+                                        @if($plus->bill == 0 && !empty($plus->note))
+                                            <hr>
+                                            Ghi chú: {{ $plus->note }}
+                                        @endif
+                                    </td>
                                     <td>
                                         @switch($plus->status)
                                             @case(1)
@@ -99,12 +103,12 @@
                                             <button type="button" class="btn btn-outline-danger revoke" data-id="{{ $plus->id }}">Thu hồi</button>
                                         </div>
                                         @endif
+
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $recharge->links() }}
                     </div>
                 </div>
             </div>
@@ -114,7 +118,7 @@
                     <div class="card-body">
                         <h5 class="card-title">LỊCH SỬ RÚT</h5>
                         <small class="text-danger fw-bold d-flex justify-content-center">TRẠNG THÁI ĐÃ THAY ĐỔI KHÔNG HOÀN TÁC ĐƯỢC</small>
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="historyRut">
                             <thead>
                             <tr>
                                 <th scope="col">Thời gian</th>
@@ -156,7 +160,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $withdraw->links() }}
                     </div>
                 </div>
             </div>
@@ -348,7 +351,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thay đổi mật khẩu: <span
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thay đổi mật khẩu: <span id="passModalUsername"></span> (<span id="passModalId"></span>)<span
                             id="modalUsername"></span></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -423,6 +426,43 @@
 
         let balActionType;
         window.addEventListener('DOMContentLoaded', function () {
+            $(document).ready(function() {
+                $('#historyDanhGia').DataTable({
+                    "pageLength": 5,
+                    "responsive": true
+                });
+                $('#historyNap').DataTable({
+                    "pageLength": 5,
+                    "responsive": true
+                });
+                $('#historyRut').DataTable({
+                    "pageLength": 5,
+                    "responsive": true
+                });
+            });
+            $('.passwordChange').click(function (e) {
+                e.preventDefault()
+                $('#passModalId').html('')
+                $('#passModalUsername').html('')
+                $.ajax({
+                    url: "{{route('admin.findById')}}",
+                    type: 'POST',
+                    dataType: 'json', // Specify the expected response type
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({idUser:$(this).data('id') }), // Use the FormData object with all the fields
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    processData: false, // Set to false, since we are using FormData object
+                    success: function (data) {
+                        $('#passModalId').html(data.user.id)
+                        $('#passModalUsername').html(data.user.username)
+                    },
+                    error: function (data) {
+                        toast.error('Không tìm thấy');
+                    },
+                });
+            })
             $('.withdrawDetail').click(function (e) {
                 e.preventDefault()
 

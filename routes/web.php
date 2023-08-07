@@ -97,7 +97,6 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
 
         Route::get('/admin/game_manager', 'gameManagerView')->name('admin.game_manager');
 
-
         Route::get('admin/logout', 'logout')->name('admin.logout');
     });
 });

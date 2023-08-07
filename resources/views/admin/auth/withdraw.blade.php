@@ -2,9 +2,12 @@
 @extends('admin.layout')
 
 @section('content')
+    <x-auto-reload-checkbox />
+
     <table class="table table-striped display"  id="myTable">
         <thead>
         <tr>
+            <th scope="col">Thời gian</th>
             <th scope="col">ID User</th>
             <th scope="col">Username</th>
             <th scope="col">Đại lí</th>
@@ -13,13 +16,13 @@
             <th scope="col">Ngân hàng</th>
             <th scope="col">STK</th>
             <th scope="col">Chủ TK</th>
-            <th scope="col">Thời gian</th>
             <th scope="col">Thao tác</th>
         </tr>
         </thead>
         <tbody>
         @foreach($withdraws as $wd)
             <tr>
+                <th>{{ $wd->created_at->format('Y-m-d H:i:s') }}</th>
                 <th>{{ $wd->user_id }}</th>
                 <th><a class="link-underline link-underline-opacity-0" href="{{ route('admin.users.find', $wd->user_id) }}">{{ $wd->username }}</a></th>
                 <th>{{ $wd->promo_code }}</th>
@@ -43,7 +46,6 @@
                 <th>{{ $bankinfo->code }}</th>
                 <th>{{ $wd->card_number }}</th>
                 <th>{{ $wd->card_holder }}</th>
-                <th>{{ $wd->created_at->format('Y-m-d H:i:s') }}</th>
                 <th>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
                         <button type="button" class="btn btn-success action" data-action="1" data-id="{{ $wd->id }}" @if($wd->status > 0) disabled @endif>Duyệt</button>
@@ -62,7 +64,9 @@
         import {toast} from 'https://cdn.skypack.dev/wc-toast'
         window.addEventListener('DOMContentLoaded', function () {
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                $('#myTable').DataTable({
+                    "order": [[ 0, 'desc' ]]
+                });
             });
             $('#searchInput').on('keyup', function() {
                 let searchTerm = $(this).val().toLowerCase();
