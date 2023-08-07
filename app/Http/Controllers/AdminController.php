@@ -65,7 +65,7 @@ class AdminController extends Controller
     {
         $row = LuckyNumber::where('id', $request->id)->first();
         if (empty($row)) return ApiController::response(404, [], 'Không tìm thấy game');
-        if ($row->game_id <= Carbon::now()->format('YmdHis')) return ApiController::response(401, [], 'Game đã sổ rồi');
+        if (Carbon::now()->format('YmdHis') > $row->game_id) return ApiController::response(401, [], 'Game đã sổ rồi');
         $row->update(['gia_tri' => $request->gia_tri]);
         return ApiController::response(200, [], 'Thành công');
     }
