@@ -180,7 +180,12 @@
                     processData: false,
                     contentType: false,
                     success: function (data) {
-                        toast.success('Cập nhật thành công')
+                        if (data.success)
+                        {
+                            toast.success('Cập nhật thành công')
+                        }else{
+                           toast.error('Không thành công') 
+                        }  
                         location.reload()
                     },
                     error: function (data) {

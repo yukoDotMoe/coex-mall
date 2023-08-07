@@ -103,8 +103,10 @@
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignCenter MuiTableCell-sizeMedium css-dwdc7h">
                                             @if($raw->trang_thai == 1)
                                                 {{ $raw->so_luong * \App\Http\Controllers\ApiController::getSetting(\App\Http\Controllers\ApiController::numToGameType($raw->thao_tac) . '_multiply') }}
-                                            @else
+                                            @elseif($raw->trang_thai == 2)
                                                 0
+                                            @else
+                                                Chờ
                                             @endif
                                         </td>
                                         <td class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium css-dwdc7h">
