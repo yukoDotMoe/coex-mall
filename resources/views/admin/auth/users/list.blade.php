@@ -2,8 +2,6 @@
 @extends('admin.layout')
 
 @section('content')
-    <x-auto-reload-checkbox />
-
     <table class="table table-striped display" id="myTable">
         <thead>
         <tr>
