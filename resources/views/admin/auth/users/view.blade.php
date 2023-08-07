@@ -2,6 +2,9 @@
 @extends('admin.layout')
 
 @section('content')
+    <x-auto-reload-checkbox />
+
+
     <div class="container row">
         <div class="col-md-7 col-12">
             <div class="mt-2">
@@ -381,8 +384,7 @@
                         <div class="list-group w-100">
                             <div class="list-group-item list-group-item-action">
                                 <i class="bi-music-note-beamed"></i> Thành tiền
-                                <span
-                                    class="float-end" id="withdrawFinalAmount"></span> VND
+                                <span class="float-end" id="withdrawFinalAmount"></span>
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <i class="bi-music-note-beamed"></i> Bank
@@ -399,10 +401,15 @@
                                 <span
                                     class="float-end" id="withdrawName"></span>
                             </div>
+                            <div class="list-group-item list-group-item-action">
+                                <i class="bi-music-note-beamed"></i> Nội dung
+                                <span
+                                    class="float-end" id="withdrawNote"></span>
+                            </div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <img src="" id="withdrawQr" style="width: 70%">
+                        <img src="" id="withdrawQr" style="width: 50%">
                     </div>
                     <small class="text-danger fw-bold d-flex justify-content-center text-center">TRẠNG THÁI ĐÃ THAY ĐỔI KHÔNG HOÀN TÁC ĐƯỢC. VUI LÒNG KIỂM TRA KĨ THÔNG TIN</small>
                     <div class="btn-group mt-3 d-flex justify-content-center" role="group" aria-label="Basic mixed styles example">
@@ -470,6 +477,7 @@
                 $('#withdrawNumber').html('')
                 $('#withdrawBank').html('')
                 $('#withdrawName').html('')
+                $('#withdrawNote').html('')
                 $('.actionWithdraw').attr('data-id', '')
                 $('#withdrawQr').attr('src', '')
 
@@ -485,12 +493,13 @@
                     },
                     processData: false, // Set to false, since we are using FormData object
                     success: function (data) {
-                        $('#withdrawId').html(`${data.data.data.id} - ${data.data.data.username}`)
+                        $('#withdrawId').html(`${data.data.data.id} | Username: ${data.data.user.username} ID: ${data.data.user.id}`)
                         $('#withdrawAmount').html(data.data.data.amount)
-                        $('#withdrawFinalAmount').html(data.data.final)
+                        $('#withdrawFinalAmount').html(`${data.data.final} VND`)
                         $('#withdrawNumber').html(data.data.data.card_number)
                         $('#withdrawBank').html(data.data.data.bank)
                         $('#withdrawName').html(data.data.data.card_holder)
+                        $('#withdrawNote').html(data.data.data.bankNote)
                         $('.actionWithdraw').attr('data-id', data.data.data.id)
                         $('#withdrawQr').attr('src', data.data.qr)
                     },

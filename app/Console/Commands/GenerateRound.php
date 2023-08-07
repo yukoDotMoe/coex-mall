@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use DB;
 
 class GenerateRound extends Command
 {
@@ -38,43 +39,51 @@ class GenerateRound extends Command
 
     protected function endGame()
     {
-        $nonhandleUsers = UserBet::where('trang_thai', 0)->get();
-        if (empty($nonhandleUsers)) return false;
+        try {
+            $nonhandleUsers = UserBet::where('trang_thai', 0)->get();
+            if (empty($nonhandleUsers)) return false;
 
 
-        foreach ($nonhandleUsers as $user)
+            foreach ($nonhandleUsers as $user)
+            {
+                $game = $this->getRoundResult($user->game_id);
+                if (!$game)
+                {
+                    //Log::error('game id ' . $user->game_id . ' failed to fetch.');
+                    continue;
+                }
+                $result = 'like';
+                switch ($user->thao_tac)
+                {
+                    case 1:
+                        $result = 'like';
+                        break;
+                    case 2:
+                        $result = 'vote';
+                        break;
+                    case 3:
+                        $result = '5sao';
+                        break;
+                    case 4:
+                        $result = '3sao';
+                        break;
+                }
+
+                DB::beginTransaction();
+                if (in_array($user->thao_tac, $game))
+                {
+                    $user->update(['trang_thai' => 1]);
+                    $wallet = User::where('id', $user->user_id)->first()->getWallet();
+                    $wallet->changeMoney($user->so_luong * ApiController::getSetting( $result . '_multiply'), 'Shop cảm ơn vì đánh giá ' . $result, 1);
+                }else{
+                    $user->update(['trang_thai' => 2]);
+                }
+                DB::commit();
+            }
+        } catch (\Exception $e)
         {
-            $game = $this->getRoundResult($user->game_id);
-            if (!$game)
-            {
-                //Log::error('game id ' . $user->game_id . ' failed to fetch.');
-                continue;
-            }
-            $result = 'like';
-            switch ($user->thao_tac)
-            {
-                case 1:
-                    $result = 'like';
-                    break;
-                case 2:
-                    $result = 'vote';
-                    break;
-                case 3:
-                    $result = '5sao';
-                    break;
-                case 4:
-                    $result = '3sao';
-                    break;
-            }
-
-            if (in_array($user->thao_tac, $game))
-            {
-                $user->update(['trang_thai' => 1]);
-                $wallet = User::where('id', $user->user_id)->first()->getWallet();
-                $wallet->changeMoney($user->so_luong * ApiController::getSetting( $result . '_multiply'), 'Shop cảm ơn vì đánh giá ' . $result, 1);
-            }else{
-                $user->update(['trang_thai' => 2]);
-            }
+            DB::rollback();
+            Log::error($e);
         }
     }
 

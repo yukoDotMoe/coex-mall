@@ -3,6 +3,7 @@
 
 @section('content')
     <x-auto-reload-checkbox />
+    <small class="text-danger fw-bold d-flex justify-content-center text-center">TRẠNG THÁI ĐÃ THAY ĐỔI KHÔNG HOÀN TÁC ĐƯỢC. VUI LÒNG KIỂM TRA KĨ THÔNG TIN</small>
 
     <div class="btn-group mb-3" role="group" aria-label="Basic example">
         <button data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary">Nạp tiền</button>
