@@ -184,7 +184,7 @@
                 e.preventDefault()
                 if($('#exampleFormControlInput11').val() == '') return false;
                 const amount = $('#exampleFormControlInput11').val()
-                var content = `★★★Chúc mừng quý khách nhận được phần quà may mắn ngẫu nhiên từ •{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}• trị giá ${formatNumber(parseInt(amount) * 1000, 2)} VND. Quý khách vui lòng liên hệ CSKH để xác minh chủ sở hữu phần quà.`
+                var content = `★★★Chúc mừng quý khách nhận được phần quà may mắn ngẫu nhiên từ •{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}• trị giá ${(formatNumber(parseInt(amount) * 1000, 2)).toString().replace(".00", "")} VND. Quý khách vui lòng liên hệ CSKH để xác minh chủ sở hữu phần quà.`
                 console.log(content)
                 $('#exampleFormControlTextarea1').val(content)
             })

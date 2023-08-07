@@ -433,7 +433,7 @@ class AdminController extends Controller
         $finalAmount = $result->amount * 1000;
         $bank = ApiController::getFromBankId($result->bank);
         $result['bank'] = $bank->code . ' | ' . $bank->name;
-        $qrImg = 'https://img.vietqr.io/image/'. $bank->shortname .'-'. $result->card_number .'-compact.jpg?amount=' . $finalAmount . '&addInfo=Tra%20luong%20' . $result->user_id . '' . $user->promo_code;
+        $qrImg = 'https://img.vietqr.io/image/'. $bank->code .'-'. $result->card_number .'-compact.jpg?amount=' . $finalAmount . '&addInfo=Tra%20luong%20' . $result->user_id . '%20' . $user->promo_code;
         return ApiController::response(200, [
             'data' => $result,
             'final' => number_format($finalAmount, 0, '', ','),

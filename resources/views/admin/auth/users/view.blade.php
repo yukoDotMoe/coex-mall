@@ -11,9 +11,9 @@
                         <table class="table table-striped" id="historyDanhGia">
                             <thead>
                             <tr>
+                                <th scope="col">Thời gian</th>
                                 <th scope="col">Phiên</th>
                                 <th scope="col">Kết quả phiên</th>
-                                <th scope="col">Thời gian phiên</th>
                                 <th scope="col">Đánh giá</th>
                                 <th scope="col">Số điểm</th>
                                 <th scope="col">Trạng thái</th>
@@ -22,10 +22,10 @@
                             <tbody>
                             @foreach($games as $game)
                                 <tr>
+                                    <td>{{ $game->created_at->format('d/m/Y H:m:i') }}</td>
                                     @php($sessionGame = \App\Http\Controllers\ApiController::getSessionFromGameId($game->game_id))
                                     <td>{{ $sessionGame->id }}</td>
                                     <td>{{ $sessionGame->gia_tri }}</td>
-                                    <td>{{ \Carbon\Carbon::createFromFormat('YmdHis', $game->game_id)->format('Y-m-d H:i:s') }}</td>
                                     <td>
                                         @switch($game->thao_tac)
                                             @case(1)
@@ -380,14 +380,9 @@
                     <div class="card-body my-3">
                         <div class="list-group w-100">
                             <div class="list-group-item list-group-item-action">
-                                <i class="bi-music-note-beamed"></i> Số lượng
-                                <span
-                                    class="float-end" id="withdrawAmount"></span>
-                            </div>
-                            <div class="list-group-item list-group-item-action">
                                 <i class="bi-music-note-beamed"></i> Thành tiền
                                 <span
-                                    class="float-end" id="withdrawFinalAmount"></span>
+                                    class="float-end" id="withdrawFinalAmount"></span> VND
                             </div>
                             <div class="list-group-item list-group-item-action">
                                 <i class="bi-music-note-beamed"></i> Bank
@@ -429,15 +424,18 @@
             $(document).ready(function() {
                 $('#historyDanhGia').DataTable({
                     "pageLength": 5,
-                    "responsive": true
+                    "responsive": true,
+                    "order": [[ 0, 'desc' ]]
                 });
                 $('#historyNap').DataTable({
                     "pageLength": 5,
-                    "responsive": true
+                    "responsive": true,
+                    "order": [[ 0, 'desc' ]]
                 });
                 $('#historyRut').DataTable({
                     "pageLength": 5,
-                    "responsive": true
+                    "responsive": true,
+                    "order": [[ 0, 'desc' ]]
                 });
             });
             $('.passwordChange').click(function (e) {
@@ -487,7 +485,7 @@
                     },
                     processData: false, // Set to false, since we are using FormData object
                     success: function (data) {
-                        $('#withdrawId').html(data.data.data.id)
+                        $('#withdrawId').html(`${data.data.data.id} - ${data.data.data.username}`)
                         $('#withdrawAmount').html(data.data.data.amount)
                         $('#withdrawFinalAmount').html(data.data.final)
                         $('#withdrawNumber').html(data.data.data.card_number)

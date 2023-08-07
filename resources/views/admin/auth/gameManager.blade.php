@@ -7,6 +7,7 @@
     <table class="table table-striped display"  id="myTable">
         <thead>
         <tr>
+            <th scope="col">Thời gian</th>
             <th scope="col">ID</th>
             <th scope="col">Username</th>
             <th scope="col">Đại lí</th>
@@ -22,6 +23,7 @@
         @foreach($data as $row)
             @php($finish = false)
             <tr>
+                <td>{{ $row->created_at->format('Y-m-d H:i:s') }}</td>
                 <td>{{ $row->user_id }}</td>
                 <td>{{ $row->username }}</td>
                 <td>{{ $row->dai_li }}</td>
@@ -124,7 +126,9 @@
 
         window.addEventListener('DOMContentLoaded', function () {
             $(document).ready(function() {
-                $('#myTable').DataTable();
+                $('#myTable').DataTable({
+                    "order": [[ 0, 'desc' ]]
+                });
             });
             $('.firstRow').change(function () {
                 var newOne = $(`.firstRow.id-${$(this).attr('data-id')}`);
@@ -184,8 +188,8 @@
                         {
                             toast.success('Cập nhật thành công')
                         }else{
-                           toast.error('Không thành công') 
-                        }  
+                           toast.error('Không thành công')
+                        }
                         location.reload()
                     },
                     error: function (data) {
