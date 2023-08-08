@@ -15,39 +15,77 @@
             max-height: 100%;
         }
     </style>
-    <div class="btn-group mb-3" role="group" aria-label="Basic example">
-        <a href="{{ route('admin.news.create') }}" type="button" class="btn btn-primary">Tạo bài viết</a>
-    </div>
-    <table class="table table-striped display" id="myTable">
-        <thead>
-        <tr>
-            <th scope="col">Thời gian</th>
-            <th scope="col">Tên</th>
-            <th scope="col">Danh mục</th>
-            <th scope="col">Nội dung</th>
-            <th scope="col">Thao tác</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach(\App\Models\BaiViet::orderBy('created_at', 'desc')->get() as $post)
-            <tr>
-                <th>{{ $post->created_at->format('Y-m-d H:i:s') }}</th>
-                <th>{{ mb_strimwidth($post->title, 0, 20, '...') }}</th>
-                <th>{{ \App\Models\DanhMuc::where('id', $post->danh_muc)->first()->name ?? '-' }}</th>
-                <th>{{ mb_strimwidth($post->content, 0, 50, '...') }}</th>
-                <th>
-                    <div class="btn-group" role="group">
-                        <a href="{{ route('admin.news.edit', $post->post_id) }}" class="btn btn-outline-warning"><i
-                                class="fa-solid fa-pencil"></i></a>
-                        <a href="{{ route('admin.news.delete', $post->post_id) }}" class="btn btn-outline-danger"><i
-                                class="fa-solid fa-trash-can"></i></a>
-                    </div>
-                </th>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
 
+    <form id="updateForm" action="{{ route('admin.news.edit.post') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <!-- Title -->
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ $post->title }}" required>
+        </div>
+
+        <!-- Small Title -->
+        <div class="form-group">
+            <label for="small_title">Price</label>
+            <input type="text" class="form-control" id="small_title" name="price" value="{{ $post->price }}" required>
+        </div>
+
+
+        <div class="form-group">
+            <label for="set_vote_stars">Set display vote stars</label>
+            <input type="number" class="form-control" id="set_vote_stars" name="vote" value="{{ $post->order }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="set_vote">Predefined Vote</label>
+            <input type="number" class="form-control" id="set_vote" name="vote" value="{{ $post->vote }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="set_like">Predefined Like</label>
+            <input type="number" class="form-control" id="set_like" name="like" value="{{ $post->like }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="limit_vote">Limit Vote</label>
+            <input type="number" class="form-control" id="limit_vote" value="{{ $post->limit_vote }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="limit_like">Limit Like</label>
+            <input type="number" class="form-control" id="limit_like" value="{{ $post->limit_like }}" required>
+        </div>
+
+        <!-- Danh Muc -->
+        <div class="form-group">
+            <label for="danh_muc">Danh Muc</label>
+            <select class="form-select form-select-lg mb-3" name="danh_muc" id="danh_muc">
+                @foreach(\App\Models\DanhMuc::all() as $dm)
+                    <option value="{{ $dm->id }}" @if($post->danh_muc == $dm->id) selected @endif>{{ $dm->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="thumbnail" class="form-label">Thumbnail (jpg, png, pdf, max 2MB)</label>
+            <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept=".jpg, .png, .pdf">
+            <!-- Thumbnail Preview -->
+            <div class="thumbnail-container">
+                <div class="thumbnail-preview">
+                    <img src="{{ asset($post->thumbnail) }}" class="img-thumbnail"/>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inside Content -->
+        <div class="form-group">
+            <label for="inside_content">Inside Content</label>
+            <textarea class="form-control" id="inside_content" name="inside_content" rows="5" required>{{ $post->content }}</textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit btn btn-primary">Submit</button>
+    </form>
 @endsection
 
 @section('js')
@@ -65,12 +103,7 @@
         }
 
         window.addEventListener('DOMContentLoaded', function () {
-            $('.editPost').click(function () {
-                $('#set_vote').val(randomIntFromInterval(30, 50))
-                $('#set_like').val(randomIntFromInterval(30, 50))
-                $('#set_vote_stars').val(randomIntFromInterval(3, 5))
-            })
-            $('#submitCreate').click(function (event) {
+            $('#updateForm').submit(function (event) {
                 event.preventDefault();
                 var _this = $('.submit');
                 setTimeout(function () {
@@ -79,6 +112,7 @@
                 }, 300);
 
                 var formData = new FormData();
+                formData.append('post_id', '{{ $post->post_id }}'); // Add the 'title' field
                 formData.append('title', $('#title').val()); // Add the 'title' field
                 formData.append('vote', $('#set_vote').val()); // Add the 'title' field
                 formData.append('vote_stars', $('#set_vote_stars').val()); // Add the 'title' field
@@ -87,11 +121,13 @@
                 formData.append('limit_like', $('#limit_like').val()); // Add the 'title' field
                 formData.append('price', $('#small_title').val()); // Add the 'price' field
                 formData.append('danh_muc', $('#danh_muc').val()); // Add the 'danh_muc' field
-                formData.append('thumbnail', $('#thumbnail')[0].files[0]); // Add the 'thumbnail' file input
+                if ( $('#thumbnail')[0].files.length > 0) {
+                    formData.append('thumbnail', $('#thumbnail')[0].files[0]);
+                } // Add the 'thumbnail' file input
                 formData.append('inside_content', $('#inside_content').val()); // Add the 'inside_content' field
 
                 $.ajax({
-                    url: "{{route('admin.news.create.post')}}",
+                    url: "{{route('admin.news.edit.post')}}",
                     type: 'POST',
                     dataType: 'json', // Specify the expected response type
                     data: formData, // Use the FormData object with all the fields

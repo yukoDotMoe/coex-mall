@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/exchange-point', [ProfileController::class, 'withdrawRequest'])->name('account.withdraw.post');
 
     Route::get('/news', [\App\Http\Controllers\NewsController::class, 'homeView'])->name('news');
-    Route::get('/news/{id}', [\App\Http\Controllers\NewsController::class, 'viewPost'])->name('news.view');
+    Route::get('/news/view/{id}', [\App\Http\Controllers\NewsController::class, 'viewPost'])->name('news.view');
     Route::post('/news/react/{id}', [\App\Http\Controllers\NewsController::class, 'react'])->name('news.react');
     Route::post('/react/buy', [\App\Http\Controllers\NewsController::class, 'buyReact'])->name('news.buyReact');
 
@@ -66,8 +66,16 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
         Route::get('/admin/lucky_game', 'luckyGameView')->name('admin.lucky_game');
         Route::post('/admin/lucky_game', 'luckyUpdate')->name('admin.lucky_game.post');
 
-        Route::get('/admin/bai_viet', 'postview')->name('admin.bai_viet');
-        Route::post('/admin/bai_viet', 'createPost')->name('admin.bai_viet.post');
+        Route::get('/admin/news/bai_viet', 'postview')->name('admin.bai_viet');
+
+        Route::get('/admin/news/tao', 'createView')->name('admin.news.create');
+        Route::post('/admin/news/bai_viet', 'createPost')->name('admin.news.create.post');
+
+        Route::get('/admin/news/chinh_sua/{id}', 'editPostView')->name('admin.news.edit');
+        Route::post('/admin/chinh_sua_post', 'editPostRequest')->name('admin.news.edit.post');
+
+        Route::get('/admin/news/xoa/{id}', 'deletePost')->name('admin.news.delete');
+
 
         Route::post('/admin/user_withdraw', 'findWithdraw')->name('admin.findWithdraw');
         Route::post('/admin/editBal', 'updateBalance')->name('admin.updateBalance');

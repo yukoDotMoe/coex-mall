@@ -9,15 +9,12 @@
                         </div>
                     </div>
                 </button>
-                @php($posts = \App\Http\Controllers\NewsController::findPost($dm->id)->paginate(5))
+                @php($dmPosts  = \App\Http\Controllers\NewsController::findPost($dm->id)->paginate(5, ['*'], 'danh_muc_' . $dm->id))
                 <div data-bs-parent="#post_accor" id="post_accor_{{ $dm->id }}"
                      class="accordion-collapse collapse @if($loop->iteration == 1) show @endif"
                      data-bs-parent="#post_accor">
-                    @foreach($posts as $post)
-
-                        <div class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-c4sutr"
-                             style="min-height: 0px;">
-
+                    @foreach($dmPosts as $post)
+                        <div class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-entered css-c4sutr" style="min-height: 0px;">
                             <div class="p-{{ $post->post_id }} MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root rounded-none mb-3 relative css-s18byi">
                                 <div class="slick-slider w-full flex justify-center h-[240px] slick-initialized">
                                     <div class="slick-list">
@@ -88,13 +85,11 @@
                                     </a>
                                 </div>
                             </div>
-
-
                         </div>
                     @endforeach
-                <div class="d-flex justify-content-center">
-                    {{ $posts->links() }}
-                </div>
+                    <div class="d-flex justify-content-center">
+                        {{ $dmPosts->appends(['paginator' . $dm->id => $dmPosts->currentPage()])->links() }}
+                    </div>
                 </div>
             </div>
         @endforeach

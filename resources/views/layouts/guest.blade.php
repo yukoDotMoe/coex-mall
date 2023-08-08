@@ -21,6 +21,7 @@
     <meta property="twitter:title" content="{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}" />
     <meta property="twitter:description" content="{{ \App\Http\Controllers\ApiController::getSetting('page_decs') }}" />
     <meta property="twitter:image" content="{{ asset(\App\Http\Controllers\ApiController::getSetting('page_thumbnail')) }}" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>

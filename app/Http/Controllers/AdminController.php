@@ -11,6 +11,7 @@ use App\Models\UserBank;
 use App\Models\UserBet;
 use App\Models\Withdraw;
 use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -123,7 +124,68 @@ class AdminController extends Controller
         $post->order = $request->vote_stars;
         $post->save();
 
-        return ApiController::response(200, ['redirect_url' => route('admin.bai_viet')], 'Thêm bài viết thành công, ID: ' . $post->id);
+        return ApiController::response(200, [], 'Tạo thành công, ID: ' . $post->id);
+    }
+
+    public function createView()
+    {
+        return view('admin.auth.createPost');
+    }
+
+    public function editPostView($id)
+    {
+        $post = BaiViet::where('post_id', $id)->first();
+        if (empty($post)) return redirect()->route('admin.bai_viet')->with(['msg' => 'Không tìm thấy bài viết']);
+        return view('admin.auth.editPost', ['post' => $post]);
+    }
+
+    public function editPostRequest(Request $request)
+    {
+        $request->validate([
+            'post_id' => 'required|string',
+            'title' => 'required|string',
+            'price' => 'required',
+            'danh_muc' => 'required|numeric',
+            'thumbnail' => 'nullable|file|mimes:jpg,png,pdf|max:2048', // Adjust the allowed file types and size as needed
+            'inside_content' => 'required',
+            'vote' => 'required|numeric',
+            'like' => 'required|numeric',
+            'limit_vote' => 'required|numeric',
+            'limit_like' => 'required|numeric',
+            'vote_stars' => 'required|numeric',
+        ]);
+
+        if (isset($request->thumbnail))
+        {
+            $file = $request->file('thumbnail');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/posts/'), $fileName);
+            $filePath = '/uploads/posts/' . $fileName;
+        }
+
+        $post = BaiViet::where('post_id', $request->post_id)->first();
+        if (empty($post)) return ApiController::response(404, [], 'Không tìm thấy bài viết');
+        $post->price = ApiController::extractNumbersFromString($request->price);
+        $post->title = $request->title;
+        $post->small_title = '..';
+        $post->danh_muc = $request->danh_muc;
+        if (isset($request->thumbnail)) $post->thumbnail = $filePath;
+        $post->content = $request->inside_content;
+        $post->limit_vote = $request->limit_vote;
+        $post->limit_like = $request->limit_like;
+        $post->vote = $request->vote;
+        $post->like = $request->like;
+        $post->order = $request->vote_stars;
+        $post->save();
+        return ApiController::response(200, [], 'Thay đổi thành công');
+    }
+
+    public function deletePost($id)
+    {
+        $post = BaiViet::where('post_id', $id)->first();
+        if (empty($post)) return redirect()->route('admin.bai_viet')->with(['success' => false, 'msg' => 'Không tìm thấy bài viết']);
+        $post->delete();
+        return redirect()->route('admin.bai_viet')->with(['success' => true]);
     }
 
     public function usersView()
