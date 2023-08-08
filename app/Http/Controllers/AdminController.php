@@ -458,8 +458,23 @@ class AdminController extends Controller
         return view('admin.auth.gameManager', ['data' => $list]);
     }
 
-    public function gameManager(Request $request)
+    public function seoView()
     {
+        return view('admin.auth.seo');
+    }
 
+    public function seoRequest(Request $request)
+    {
+        $file1 = $request->file('thumbnail');
+
+        $fileName1 = 'thumbnail_' . time() . '.' . $file1->getClientOriginalExtension();
+        $file1->move(public_path('/'), $fileName1);
+        $filePath1 = '/' . $fileName1;
+
+        Settings::where('name', 'page_title')->first()->update(['value' => $request->title]);
+        Settings::where('name', 'page_decs')->first()->update(['value' => $request->decs]);
+        Settings::where('name', 'page_thumbnail')->first()->update(['value' => $filePath1]);
+
+        return ApiController::response(200, [], 'Thành công ');
     }
 }

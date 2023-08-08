@@ -67,7 +67,7 @@
                     var _this = $('.submit');
                     setTimeout(function () {
                         _this.html('<i class="fa-solid fa-circle-notch fa-spin"></i>');
-                        _this.prop('disabled', false);
+                        _this.prop('disabled', true);
                     }, 300);
 
                     $.ajax({

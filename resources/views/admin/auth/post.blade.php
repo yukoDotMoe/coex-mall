@@ -71,8 +71,8 @@
             </div>
 
             <div class="form-group">
-                <label for="thumbnail">Thumbnail (jpg, png, pdf, max 2MB)</label>
-                <input type="file" class="form-control-file reduceSize" id="thumbnail" name="thumbnail" accept=".jpg, .png, .pdf" required>
+                <label for="thumbnail" class="form-label">Thumbnail (jpg, png, pdf, max 2MB)</label>
+                <input type="file" class="form-control" id="thumbnail" name="thumbnail" accept=".jpg, .png, .pdf" required>
                 <!-- Thumbnail Preview -->
                 <div class="thumbnail-container">
                     <div class="thumbnail-preview"></div>
