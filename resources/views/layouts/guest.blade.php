@@ -5,6 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}</title>
+    <link rel="shortcut icon" href="{{ asset('logo.png') }}" type="image/x-icon">
+
+    <meta name="title" content="{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}" />
+    <meta name="description" content="{{ \App\Http\Controllers\ApiController::getSetting('page_decs') }}" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ env('APP_URL') }}" />
+    <meta property="og:title" content="{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}" />
+    <meta property="og:description" content="{{ \App\Http\Controllers\ApiController::getSetting('page_decs') }}" />
+    <meta property="og:image" content="{{ asset(\App\Http\Controllers\ApiController::getSetting('page_thumbnail')) }}" />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="{{ env('APP_URL') }}" />
+    <meta property="twitter:title" content="{{ \App\Http\Controllers\ApiController::getSetting('page_title') }}" />
+    <meta property="twitter:description" content="{{ \App\Http\Controllers\ApiController::getSetting('page_decs') }}" />
+    <meta property="twitter:image" content="{{ asset(\App\Http\Controllers\ApiController::getSetting('page_thumbnail')) }}" />
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
