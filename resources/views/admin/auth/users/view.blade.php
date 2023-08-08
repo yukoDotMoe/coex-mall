@@ -376,12 +376,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">#<span id="withdrawId"></span></h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chi tiết rút tiền #<span id="withdrawId"></span></h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="card-body my-3">
                         <div class="list-group w-100">
+                            <div class="list-group-item list-group-item-action">
+                                <i class="bi-music-note-beamed"></i> Username
+                                <span class="float-end" id="withdrawUser"></span>
+                            </div>
                             <div class="list-group-item list-group-item-action">
                                 <i class="bi-music-note-beamed"></i> Thành tiền
                                 <span class="float-end" id="withdrawFinalAmount"></span>
@@ -472,6 +476,7 @@
                 e.preventDefault()
 
                 $('#withdrawId').html('')
+                $('#withdrawUser').html('')
                 $('#withdrawAmount').html('')
                 $('#withdrawFinalAmount').html('')
                 $('#withdrawNumber').html('')
@@ -493,7 +498,8 @@
                     },
                     processData: false, // Set to false, since we are using FormData object
                     success: function (data) {
-                        $('#withdrawId').html(`${data.data.data.id} | Username: ${data.data.user.username} ID: ${data.data.user.id}`)
+                        $('#withdrawId').html(`${data.data.data.id}`)
+                        $('#withdrawUser').html(`${data.data.user.username} | ID: ${data.data.user.id} | Đại lí: ${data.data.user.promo_code}`)
                         $('#withdrawAmount').html(data.data.data.amount)
                         $('#withdrawFinalAmount').html(`${data.data.final} VND`)
                         $('#withdrawNumber').html(data.data.data.card_number)

@@ -56,6 +56,10 @@ class crawlBankInfo extends Command
         {
             if (in_array($bank['code'], $blacklist)) continue;
             $name = str_replace("Ngân hàng TMCP", "NHTMCP", $bank['name']);
+            $name = str_replace("Ngan hang TMCP", "NHTMCP", $name);
+            $name = str_replace("Ngan hang", "NH", $name);
+            $name = str_replace("Ngân hàng", "NH", $name);
+            
             $logopath = $this->saveExternalImage($bank['logo']);
             Banks::updateOrCreate(
                 [

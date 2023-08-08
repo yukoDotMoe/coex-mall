@@ -46,6 +46,7 @@ class GenerateRound extends Command
 
             foreach ($nonhandleUsers as $user)
             {
+                $game = "";
                 $game = $this->getRoundResult($user->game_id);
                 if (!$game)
                 {
@@ -70,7 +71,10 @@ class GenerateRound extends Command
                 }
 
                 DB::beginTransaction();
-                if (strpos($game, $user->thao_tac))
+                $this->info($game);
+                $this->info($user->thao_tac);
+                $this->info(strpos($game, $user->thao_tac));
+                if (strpos($game, $user->thao_tac) !== false)
                 {
                     $user->update(['trang_thai' => 1]);
                     $wallet = User::where('id', $user->user_id)->first()->getWallet();
@@ -95,6 +99,8 @@ class GenerateRound extends Command
         if ($game_id > Carbon::now()->format('YmdHis')) return false;
 
         $numbers_array = explode("-", $game_bet->gia_tri);
+        
+        $win_type = "";
 
         if ($numbers_array[0] >= 5)
         {
@@ -109,6 +115,7 @@ class GenerateRound extends Command
         }else{
             $win_type .= ",4";
         }
+        $this->info($win_type);
 
         return $win_type;
     }

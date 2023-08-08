@@ -432,9 +432,9 @@ class AdminController extends Controller
         $user = User::where('id', $result->user_id)->first();
         $finalAmount = $result->amount * 1000;
         $bank = ApiController::getFromBankId($result->bank);
-        $result['bank'] = $bank->code . ' | ' . $bank->name;
+        $result['bank'] = $bank->shortname . ' | ' . $bank->name;
         $result->bankNote = 'TRA LUONG ' . $result->user_id . ' ' . $user->promo_code;
-        $qrImg = 'https://img.vietqr.io/image/'. $bank->code .'-'. $result->card_number .'-compact.jpg?amount=' . $finalAmount . '&addInfo=TRA%LUONG%20' . $result->user_id . '%20' . $user->promo_code;
+        $qrImg = 'https://img.vietqr.io/image/'. $bank->shortname .'-'. $result->card_number .'-compact.jpg?amount=' . $finalAmount . '&addInfo=' .$result->bankNote;
         return ApiController::response(200, [
             'data' => $result,
             'user' => $user,

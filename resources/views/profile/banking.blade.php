@@ -10,7 +10,7 @@
                     <select aria-invalid="false" id="bankList" name="bankId" type="text"
                            class="MuiInputBase-input MuiOutlinedInput-input css-1x5jdmq">
                         @foreach(\App\Models\Banks::where('status', 1)->get() as $bank)
-                            <option @if(isset($bankUser->bank_id) && $bankUser->bank_id == $bank->id) selected @endif value="{{ $bank->id }}">{{ $bank->name }} ({{ $bank->code }})</option>
+                            <option @if(isset($bankUser->bank_id) && $bankUser->bank_id == $bank->id) selected @endif value="{{ $bank->id }}">{{ $bank->name }} ({{ $bank->shortname }})</option>
                         @endforeach
                     </select>
                     <fieldset   aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-igs3ac">
