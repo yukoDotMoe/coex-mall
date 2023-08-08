@@ -157,10 +157,10 @@ class ProfileController extends Controller
                 $arrays = Withdraw::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
                 break;
             case 'bet':
+                $current = LuckyNumber::where('game_id','<',Carbon::now()->format('YmdHis'))->orderBy('id', 'desc')->first();
                 $arrays = UserBet::where([
                     ['user_id', '=' ,Auth::user()->id],
-                    ['game_id', '<', Carbon::now()->format('YmdHis')],
-                    ['trang_thai', '>', 0] // chi chon thang
+                    ['id', '<', $current->id+1],
                 ])->orderBy('created_at', 'desc')->get();
                 foreach ($arrays as $item) {
                     $temp = LuckyNumber::where('game_id', $item->game_id)->first();
@@ -220,7 +220,7 @@ class ProfileController extends Controller
         ]);
         $game = LuckyNumber::where('id', $request->game_id)->first();
         if (empty($game) ) return ApiController::response(404, [], 'Không tìm thấy.');
-        if ($game->game_id >= Carbon::now()->format('YmdHis')) return ApiController::response(404, [], 'Không tìm thấy.');
+        if ($game->game_id >= Carbon::now()->format('YmdHis')) return ApiController::response(404, [], 'Đang chờ');
         $bet = UserBet::where('id', $request->bet_id)->first();
         if (empty($bet) ) return ApiController::response(404, [], 'Không tìm thấy.');
         return ApiController::response(200, [

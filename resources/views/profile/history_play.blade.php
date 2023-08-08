@@ -279,7 +279,7 @@
                         if(!data.success)
                         {
                             $('#explain').modal('toggle');
-                            toast.error('Không tìm thấy')
+                            toast.error(data.message)
                         }
                         const numbersArr = (data.data.result).split('-')
                         $('#kq1').html(numbersArr[0])
