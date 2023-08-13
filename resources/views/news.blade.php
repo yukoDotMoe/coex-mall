@@ -9,7 +9,10 @@
                         </div>
                     </div>
                 </button>
-                @php($dmPosts  = \App\Http\Controllers\NewsController::findPost($dm->id)->paginate(5, ['*'], 'danh_muc_' . $dm->id))
+                @php
+                    $paginatorName = 'post_accor_' . $dm->id;
+                    $dmPosts = \App\Http\Controllers\NewsController::findPost($dm->id)->paginate(5, ['*'], $paginatorName);
+                @endphp
                 <div data-bs-parent="#post_accor" id="post_accor_{{ $dm->id }}"
                      class="accordion-collapse collapse @if($loop->iteration == 1) show @endif"
                      data-bs-parent="#post_accor">
@@ -88,7 +91,7 @@
                         </div>
                     @endforeach
                     <div class="d-flex justify-content-center">
-                        {{ $dmPosts->appends(['danh_muc_' . $dm->id => $dmPosts->currentPage()])->links() }}
+                        {{ $dmPosts->appends([$paginatorName => $dmPosts->currentPage()])->links() }}
                     </div>
                 </div>
             </div>
@@ -97,6 +100,19 @@
     @section('js')
         <script type="module">
             import {toast} from 'https://cdn.skypack.dev/wc-toast';
+
+
+
+            $(document).ready(function () {
+                const basePath = window.location.search.replace('?', '').split('&');
+                if (basePath !== undefined && basePath.length > 0 && basePath[0] !== '') {
+                    $('.show').each(function () {
+                        $(this).removeClass('show')
+                    })
+                    const smallerBase = basePath[0].split('=');
+                    $(`#${smallerBase[0]}`).addClass('show')
+                }
+            })
 
             $('.MuiRating-icon').click(function () {
                 const pid = $(this).parent().data('post')
