@@ -88,7 +88,7 @@
                         </div>
                     @endforeach
                     <div class="d-flex justify-content-center">
-                        {{ $dmPosts->appends(['paginator' . $dm->id => $dmPosts->currentPage()])->links() }}
+                        {{ $dmPosts->appends(['danh_muc_' . $dm->id => $dmPosts->currentPage()])->links() }}
                     </div>
                 </div>
             </div>
