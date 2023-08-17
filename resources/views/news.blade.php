@@ -1,6 +1,6 @@
 <x-news-layout>
     <div class="accordion" id="post_accor">
-        @foreach(\App\Models\DanhMuc::all() as $dm)
+        @foreach(\App\Models\DanhMuc::orderBy('order', 'asc')->get() as $dm)
             <div class="accordion-item border-0">
                 <button class="w-100" type="button" data-bs-toggle="collapse" data-bs-target="#post_accor_{{$dm->id}}">
                     <div class="mb-3">

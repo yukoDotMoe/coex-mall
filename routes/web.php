@@ -68,6 +68,11 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
 
         Route::get('/admin/news/bai_viet', 'postview')->name('admin.bai_viet');
 
+        Route::get('/admin/news/danh_muc', 'categoriesView')->name('admin.danh_muc');
+        Route::post('/admin/news/danh_muc_sort', 'categoriesPost')->name('admin.danh_muc.sort');
+        Route::post('/admin/news/danh_muc_create', 'categoriesCreate')->name('admin.danh_muc.create');
+        Route::get('/admin/news/danh_muc_delete/{id}', 'categoriesDelete')->name('admin.danh_muc.delete');
+
         Route::get('/admin/news/tao', 'createView')->name('admin.news.create');
         Route::post('/admin/news/bai_viet', 'createPost')->name('admin.news.create.post');
 

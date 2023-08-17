@@ -15,7 +15,9 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.lucky_game') }}">
                 <i class="nav-icon fa-solid fa-gamepad"></i> Game</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.bai_viet') }}">
-                <i class="nav-icon fa-regular fa-newspaper"></i> Thêm bài viết</a></li>
+                <i class="nav-icon fa-regular fa-newspaper"></i> Quản lý bài viết</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.danh_muc') }}">
+                <i class="nav-icon fa-regular fa-newspaper"></i> Quản lý danh mục</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.users.list') }}">
                 <i class="nav-icon fa-solid fa-users"></i> Quản lý người dùng</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.recharge') }}">

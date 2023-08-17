@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
+use App\Models\DanhMuc;
 use App\Models\LuckyNumber;
 use App\Models\Recharge;
 use App\Models\Settings;
@@ -538,5 +539,35 @@ class AdminController extends Controller
         Settings::where('name', 'page_thumbnail')->first()->update(['value' => $filePath1]);
 
         return ApiController::response(200, [], 'Thành công ');
+    }
+
+    public function categoriesView()
+    {
+        return view('admin.auth.danhMuc');
+    }
+
+    public function categoriesPost(Request $request)
+    {
+        $data = $request->json()->all();
+        foreach ($data as $row)
+        {
+            DanhMuc::where('id', $row['name'])->update(['order' => $row['order']]);
+        }
+        return ApiController::response(200, [], 'Cập nhật thành công');
+    }
+
+    public function categoriesDelete($id)
+    {
+        DanhMuc::where('id', $id)->first()->delete();
+        return redirect()->route('admin.danh_muc')->with(['success' => true]);
+    }
+
+    public function categoriesCreate(Request $request)
+    {
+        $item = new DanhMuc();
+        $item->name = $request->name;
+        $item->order = DanhMuc::orderBy('order', 'desc')->first()->order + 1;
+        $item->save();
+        return redirect()->route('admin.danh_muc')->with(['success' => true]);
     }
 }
