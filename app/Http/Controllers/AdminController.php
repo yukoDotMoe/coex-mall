@@ -125,7 +125,9 @@ class AdminController extends Controller
         $post->order = $request->vote_stars;
         $post->save();
 
-        return ApiController::response(200, [], 'Tạo thành công, ID: ' . $post->id);
+        return ApiController::response(200, [
+            'redirect_url' => route('admin.bai_viet')
+        ], 'Tạo thành công, ID: ' . $post->id);
     }
 
     public function createView()
@@ -558,6 +560,7 @@ class AdminController extends Controller
 
     public function categoriesDelete($id)
     {
+        BaiViet::where('danh_muc', $id)->delete();
         DanhMuc::where('id', $id)->first()->delete();
         return redirect()->route('admin.danh_muc')->with(['success' => true]);
     }
@@ -566,7 +569,15 @@ class AdminController extends Controller
     {
         $item = new DanhMuc();
         $item->name = $request->name;
-        $item->order = DanhMuc::orderBy('order', 'desc')->first()->order + 1;
+        $item->order = (DanhMuc::orderBy('order', 'desc')->first()->order ?? 0) + 1;
+        $item->save();
+        return redirect()->route('admin.danh_muc')->with(['success' => true]);
+    }
+
+    public function categoriesUpdate(Request $request)
+    {
+        $item = DanhMuc::where('id', $request->id)->first();
+        $item->name = $request->name;
         $item->save();
         return redirect()->route('admin.danh_muc')->with(['success' => true]);
     }

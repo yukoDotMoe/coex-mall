@@ -60,7 +60,7 @@
         <div class="form-group">
             <label for="danh_muc">Danh Muc</label>
             <select class="form-select form-select-lg mb-3" name="danh_muc" id="danh_muc">
-                @foreach(\App\Models\DanhMuc::all() as $dm)
+                @foreach(\App\Models\DanhMuc::orderBy('order', 'asc')->get() as $dm)
                     <option value="{{ $dm->id }}" @if($post->danh_muc == $dm->id) selected @endif>{{ $dm->name }}</option>
                 @endforeach
             </select>

@@ -37,7 +37,11 @@
             @foreach(\App\Models\DanhMuc::orderBy('order', 'asc')->get() as $col)
                 <li class="list-group-item d-flex justify-content-between align-items-center" data-order-item="{{ $col->order ?? $loop->index+1 }}" data-id="{{ $col->id }}">
                     <span><span class="badge bg-primary rounded-pill bruh">{{ $col->order ?? $loop->index+1 }}</span> | {{ $col->name }}</span>
-                    <a href="{{ route('admin.danh_muc.delete', ['id' => $col->id]) }}" type="button" class="btn btn-outline-danger">Xóa</a>
+                    <span>Số bài viết: {{ \App\Models\BaiViet::where('danh_muc', $col->id)->count() }}</span>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+                        <button data-bs-toggle="modal" data-bs-target="#edit" type="button" class="btn btn-info text-white editBtn" data-cat-id="{{ $col->id }}" data-cat-name="{{ $col->name }}"><i class="fa-solid fa-file-pen"></i></button>
+                        <a onclick = "if (! confirm(`Bạn có chắc muốn xoá danh mục này? Xoá danh mục đồng nghĩa với việc xoá tất cả bài viết thuộc danh mục đó.\n\n👛 Thứ tự danh mục: {{ $col->order }}\n🙋‍♀️ Tên danh mục: {{ $col->name }}\n📭 Tổng số bài viết: {{ \App\Models\BaiViet::where('danh_muc', $col->id)->count() }}\n\n⚠ Vui lòng xác nhận kĩ trước khi xoá, nếu thao tác không thể hoàn tác`)) { return false; }" type="button" class="btn btn-danger text-white deleteBtn num-{{ $col->id }}" data-name="{{ $col->name }}" href="{{ route('admin.danh_muc.delete', ['id' => $col->id]) }}"><i class="fa-solid fa-trash-can"></i></a>
+                    </div>
                 </li>
             @endforeach
         </ul>
@@ -63,8 +67,30 @@
                             <label for="exampleFormControlInput1" class="form-label">Tên danh mục</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1" name="name">
                         </div>
-                        <button class="btn btn-primary" type="submit">Cập nhật</button>
+                        <button class="btn btn-primary" type="submit">Tạo</button>
 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="edit" tabindex="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Chỉnh sửa danh mục <span class="editCatId"></span></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('admin.danh_muc.update') }}" method="POST">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="exampleFormControlInput44" class="form-label">Tên danh mục</label>
+                            <input type="text" class="form-control" id="exampleFormControlInput44" name="name">
+                        </div>
+                        <input name="id" class="editCatId" type='text' hidden>
+                        <button class="btn btn-primary" type="submit">Cập nhật</button>
                     </form>
                 </div>
             </div>
@@ -128,6 +154,21 @@
                     calculate()
                 },
             });
+
+            $('.editBtn').click(function (e) {
+                e.preventDefault()
+                let catId = $(this).attr('data-cat-id')
+                let catName = $(this).attr('data-cat-name')
+                var elms = $('.editCatId')
+                $('#exampleFormControlInput44').val(catName)
+                elms.each(function (e) {
+                    if ($(this).is("input[type='text'], input[type='password'], textarea")) {
+                        $(this).val(catId)
+                    } else {
+                        $(this).html(catName)
+                    }
+                })
+            })
         })
     </script>
 @endsection

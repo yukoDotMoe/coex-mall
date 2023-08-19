@@ -1,4 +1,7 @@
 <x-news-layout>
+    @if(count(\App\Models\DanhMuc::orderBy('order', 'asc')->get()) < 1)
+        <p class="text-center p-3">Chưa có tin nào hết á 🤷‍♀️</p>
+    @endif
     <div class="accordion" id="post_accor">
         @foreach(\App\Models\DanhMuc::orderBy('order', 'asc')->get() as $dm)
             <div class="accordion-item border-0">
