@@ -28,15 +28,11 @@
         @yield('header')
     @else
         <div class="slick -container">
+            @foreach(\App\Models\Headers::orderBy('order', 'asc')->get() as $col)
             <div class="sm:h-[180px] h-[140px]"
-                 style="background: url('{{ asset('/headers/1.jpeg') }}') center top / contain no-repeat;">
+                 style="background: url('{{ asset($col->path) }}') center top / contain no-repeat;">
             </div>
-            <div class="sm:h-[180px] h-[140px]"
-                 style="background: url('{{ asset('/headers/2.jpeg') }}') center top / contain no-repeat;">
-            </div>
-            <div class=" sm:h-[180px] h-[140px]"
-                 style="background: url('{{ asset('/headers/3.jpeg') }}') center top / contain no-repeat;">
-            </div>
+            @endforeach
         </div>
         @include('layouts.movingAnn')
     @endif

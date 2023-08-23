@@ -12,6 +12,9 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.seo') }}">
                 <i class="nav-icon fa-solid fa-icons"></i> Tuỳ chỉnh SEO</a></li>
 
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.headers') }}">
+                <i class="nav-icon fa-solid fa-images"></i> Tuỳ chỉnh Header</a></li>
+
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.lucky_game') }}">
                 <i class="nav-icon fa-solid fa-gamepad"></i> Game</a></li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.bai_viet') }}">

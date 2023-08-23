@@ -17,7 +17,8 @@
 @endsection
 
 @section('js')
-    <script>
+    <script type="module">
+        import {toast} from 'https://cdn.skypack.dev/wc-toast'
         window.addEventListener('DOMContentLoaded', function () {
 
         })

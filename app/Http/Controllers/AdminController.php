@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
 use App\Models\DanhMuc;
+use App\Models\Headers;
 use App\Models\LuckyNumber;
 use App\Models\Recharge;
 use App\Models\Settings;
@@ -580,5 +581,62 @@ class AdminController extends Controller
         $item->name = $request->name;
         $item->save();
         return redirect()->route('admin.danh_muc')->with(['success' => true]);
+    }
+
+    public function headersView()
+    {
+        return view('admin.auth.headers');
+    }
+
+    public function createHeader(Request $request)
+    {
+        $file1 = $request->file('thumbnail');
+
+        $fileName1 = 'headers_' . time() . '.' . $file1->getClientOriginalExtension();
+        $file1->move(public_path('/'), $fileName1);
+        $filePath1 = '/' . $fileName1;
+
+        $header = new Headers();
+        $header->order = (Headers::orderBy('order', 'desc')->first()->order ?? 0) + 1;
+        $header->path = $filePath1;
+        $header->save();
+        return ApiController::response(200, [
+            'redirect_url' => route('admin.headers')
+        ], 'Tạo header thành công');
+    }
+
+    public function headerOrderPost(Request $request)
+    {
+        $data = $request->json()->all();
+        foreach ($data as $row)
+        {
+            Headers::where('id', $row['name'])->update(['order' => $row['order']]);
+        }
+        return ApiController::response(200, [], 'Cập nhật thành công');
+    }
+
+    public function headersUpdate(Request $request)
+    {
+        $file1 = $request->file('thumbnail');
+
+        $fileName1 = 'headers_' . time() . '.' . $file1->getClientOriginalExtension();
+
+        if(!file_exists(public_path($fileName1))) {
+            $file1->move(public_path('/'), $fileName1);
+        }
+
+        $filePath1 = '/' . $fileName1;
+
+        $item = Headers::where('id', $request->picId)->first();
+        $item->path = $filePath1;
+        $item->save();
+        return ApiController::response(200, [
+            'redirect_url' => route('admin.headers')
+        ], 'Cập nhật header thành công');    }
+
+    public function headersDelete($id)
+    {
+        Headers::where('id', $id)->first()->delete();
+        return redirect()->route('admin.headers')->with(['success' => true]);
     }
 }

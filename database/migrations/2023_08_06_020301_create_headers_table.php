@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('headers', function (Blueprint $table) {
             $table->id();
             $table->integer('order');
-            $table->integer('path');
+            $table->string('path');
             $table->timestamps();
         });
     }
