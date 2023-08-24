@@ -17,9 +17,11 @@
                           stroke="#1E2843" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
-            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 mt-2 px-3 py-2 css-aoeo82">
-                {{ \App\Http\Controllers\ApiController::getSetting('home_intro') }}
-            </div>
+            @foreach(\App\Models\ImgIntro::orderBy('order', 'asc')->get() as $col)
+                <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-aoeo82 @if($loop->index == 0) mt-2  @endif">
+                    <img src="{{ asset($col->path) }}">
+                </div>
+            @endforeach
         </div>
 
         <div class="mt-3">

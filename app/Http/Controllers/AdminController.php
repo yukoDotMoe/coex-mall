@@ -639,4 +639,72 @@ class AdminController extends Controller
         Headers::where('id', $id)->first()->delete();
         return redirect()->route('admin.headers')->with(['success' => true]);
     }
+
+    public function imgView()
+    {
+        $editList = [
+            'intro' => 'Giới thiệu',
+            'retail' => 'Đối tác lớn',
+            'about' => 'Về chúng tôi',
+            'location' => 'Trụ sở',
+        ];
+        return view('admin.auth.img', compact('editList'));
+    }
+
+    public function imgDelete($type, $id)
+    {
+        DB::table($type . '_img')->where('id', $id)->delete();
+        return redirect()->route('admin.img')->with(['success' => true]);
+    }
+
+    public function imgCreate(Request $request)
+    {
+        $type = $request->input('type');
+        $file1 = $request->file('thumbnail');
+
+        $fileName1 = $type . '_' . time() . '_' . $file1->getClientOriginalExtension();
+        $file1->move(public_path('/imgs/'), $fileName1);
+        $filePath1 = '/imgs/' . $fileName1;
+
+        $table = DB::table($type.'_img');
+
+        $table->insert([
+            'order' => ($table->orderBy('order', 'desc')->first()->order ?? 0) + 1,
+            'path' => $filePath1
+        ]);
+        return ApiController::response(200, [
+            'redirect_url' => route('admin.img')
+        ], 'Cập nhật thành công');
+    }
+
+    public function imgUpdate(Request $request)
+    {
+        $id = $request->input('catId');
+        $type = $request->input('type');
+        $file1 = $request->file('thumbnail');
+
+        $fileName1 = $type . '_' . time() . '_' . $file1->getClientOriginalExtension();
+        $file1->move(public_path('/imgs/'), $fileName1);
+        $filePath1 = '/imgs/' . $fileName1;
+
+        $table = DB::table($type.'_img')->where('id', $id);
+
+        $table->update([
+            'path' => $filePath1
+        ]);
+        return ApiController::response(200, [
+            'redirect_url' => route('admin.img')
+        ], 'Tạo thành công');
+    }
+
+    public function imgOrder(Request $request)
+    {
+        $singleInput = $request->input('single_input');
+        $arrayInput = $request->input('array_input');
+        foreach ($arrayInput as $row)
+        {
+            DB::table($singleInput . '_img')->where('id', $row['name'])->update(['order' => $row['order']]);
+        }
+        return ApiController::response(200, [], 'Cập nhật thành công');
+    }
 }

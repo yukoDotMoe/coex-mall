@@ -68,6 +68,12 @@ Route::controller(\App\Http\Controllers\AdminController::class)->group(function 
 
         Route::get('/admin/news/bai_viet', 'postview')->name('admin.bai_viet');
 
+        Route::get('/admin/img', 'imgView')->name('admin.img');
+        Route::post('/admin/img/create', 'imgCreate')->name('admin.img.create');
+        Route::post('/admin/img/update', 'imgUpdate')->name('admin.img.update');
+        Route::post('/admin/img/order', 'imgOrder')->name('admin.img.order');
+        Route::get('/admin/img/delete/{type}/{id}', 'imgDelete')->name('admin.img.delete');
+
         Route::get('/admin/headers', 'headersView')->name('admin.headers');
         Route::post('/admin/headers/create', 'createHeader')->name('admin.headers.create');
         Route::post('/admin/headers/update', 'headersUpdate')->name('admin.headers.update');

@@ -19,4 +19,5 @@ yarn-error.log
 /.vscode
 /public/uploads/*
 /public/headers/*
+/public/imgs/*
 /public/logo.png

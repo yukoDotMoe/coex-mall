@@ -6,9 +6,11 @@
 </div>
 
 <div class="mt-3">
-    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 mb-[-40px] bg-transparent css-aoeo82">
-        <img src="{{ asset('/minigame/img/Group.Partners.B1.28fd71059bbab3a1fee3.png') }}">
-    </div>
+    @foreach(\App\Models\ImgRetail::orderBy('order', 'asc')->get() as $col)
+        <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-aoeo82 @if($loop->index == 0) mt-2  @endif">
+            <img src="{{ asset($col->path) }}">
+        </div>
+    @endforeach
 </div>
 
 <div>
@@ -16,9 +18,11 @@
             class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 h-[40px] flex items-center justify-between px-3 border-l-2 border-primary-dark css-aoeo82">
         <div class="font-medium text-color-primary">Về chúng tôi</div>
     </div>
-    <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 mt-2 px-3 py-2 css-aoeo82">
-        {{ \App\Http\Controllers\ApiController::getSetting('home_about') }}
-    </div>
+    @foreach(\App\Models\ImgAbout::orderBy('order', 'asc')->get() as $col)
+        <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-aoeo82 @if($loop->index == 0) mt-2  @endif">
+            <img src="{{ asset($col->path) }}">
+        </div>
+    @endforeach
 </div>
 
 <div class="mt-3">
@@ -31,19 +35,11 @@
 <div class="mt-3">
     <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 my-2 p-3 css-aoeo82">
 
-        @php($addInfo = json_decode(\App\Http\Controllers\ApiController::getSetting('home_add'), true))
-
-        @foreach($addInfo['list'] as $addr)
-            @if($loop->first)
-                <div>Người nhận: {{ $addr['receiver'] }}</div>
-                <div>{{ $addr['add'] }}</div>
-            @else
-                <div class="mt-3">Người nhận: {{ $addr['receiver'] }}</div>
-                <div>{{ $addr['add'] }}</div>
-            @endif
+        @foreach(\App\Models\ImgLocation::orderBy('order', 'asc')->get() as $col)
+            <div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 css-aoeo82 @if($loop->index == 0) mt-2  @endif">
+                <img src="{{ asset($col->path) }}">
+            </div>
         @endforeach
-
-        <div class="mt-3">Chi nhánh: {{ $addInfo['branch'] }}</div>
 
         <div class="flex justify-center gap-1 mt-3 -mb-1 pt-1 border-t border-black/20">
             <button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1yxmbwk"
