@@ -662,7 +662,7 @@ class AdminController extends Controller
         $type = $request->input('type');
         $file1 = $request->file('thumbnail');
 
-        $fileName1 = $type . '_' . time() . '_' . $file1->getClientOriginalExtension();
+        $fileName1 = $type . '_' . time() . '.' . $file1->getClientOriginalExtension();
         $file1->move(public_path('/imgs/'), $fileName1);
         $filePath1 = '/imgs/' . $fileName1;
 
@@ -683,7 +683,7 @@ class AdminController extends Controller
         $type = $request->input('type');
         $file1 = $request->file('thumbnail');
 
-        $fileName1 = $type . '_' . time() . '_' . $file1->getClientOriginalExtension();
+        $fileName1 = $type . '_' . time() . '.' . $file1->getClientOriginalExtension();
         $file1->move(public_path('/imgs/'), $fileName1);
         $filePath1 = '/imgs/' . $fileName1;
 
