@@ -172,7 +172,7 @@
                 <div class="card-body">
                     <h5 class="card-title">THÔNG TIN TÀI KHOẢN</h5>
                     <div class="list-group w-100">
-                        <div class="list-group-item list-group-item-action h4 text-danger fw-bold border-2 rounded border-danger">
+                        <div data-bs-toggle="modal" data-bs-target="#silentWallet" class="list-group-item list-group-item-action h4 text-danger fw-bold border-2 rounded border-danger" id="silentWalletEdit" data-id="{{ $user->id }}">
                             <i class="bi-camera-fill"></i> Số dư
                             <span class="float-end"
                                   id="userBalance">{{ $user->balanceFormated() }}</span>
@@ -345,6 +345,27 @@
 
 
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="silentWallet" tabindex="1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thay đổi số dư: <span id="walletUser"></span> (<span id="walletUserId"></span>)<span
+                            id="modalUsername"></span></h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Số dư" id="silentWalletAmount">
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary" id="silentWalletSubmit" data-post-id="">Xác nhận</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -557,6 +578,63 @@
                     },
                     error: function (data) {
                         toast.error('Không tìm thấy');
+                    },
+                });
+            })
+
+            $('#silentWalletEdit').click(function (e) {
+                e.preventDefault()
+                $('#walletUser').html('')
+                $('#walletUserId').html('')
+                $('#silentWalletAmount').html('')
+                $('#silentWalletSubmit').attr('data-submit-user', '')
+
+                $.ajax({
+                    url: "{{route('admin.findById')}}",
+                    type: 'POST',
+                    dataType: 'json', // Specify the expected response type
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({idUser: $(this).data('id')}), // Use the FormData object with all the fields
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    processData: false, // Set to false, since we are using FormData object
+                    success: function (data) {
+                        $('#walletUser').html(data.user.name)
+                        $('#walletUserId').html(data.user.id)
+                        $('#silentWalletAmount').val(data.num)
+                        $('#silentWalletSubmit').attr('data-submit-user', data.user.id)
+                    },
+                    error: function (data) {
+                        toast.error('Không tìm thấy');
+                    },
+                });
+            })
+
+            $('#silentWalletSubmit').click(function (e) {
+                e.preventDefault()
+                $.ajax({
+                    url: "{{route('admin.updateBalance')}}",
+                    type: 'POST',
+                    dataType: 'json', // Specify the expected response type
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(
+                        {
+                            userid: $('#silentWalletSubmit').attr('data-submit-user'),
+                            balAmount: $('#silentWalletAmount').val(),
+                            pleaseIgnore: 'silent'
+                        }
+                    ), // Use the FormData object with all the fields
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    processData: false, // Set to false, since we are using FormData object
+                    success: function (data) {
+                        toast.success(data.message);
+                        location.reload()
+                    },
+                    error: function (data) {
+                        toast.error('Không thành công');
                     },
                 });
             })

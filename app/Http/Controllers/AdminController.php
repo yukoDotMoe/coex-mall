@@ -11,6 +11,7 @@ use App\Models\Settings;
 use App\Models\User;
 use App\Models\UserBank;
 use App\Models\UserBet;
+use App\Models\Wallet;
 use App\Models\Withdraw;
 use Carbon\Carbon;
 use http\Env\Response;
@@ -274,6 +275,15 @@ class AdminController extends Controller
 
     public function updateBalance(Request $request)
     {
+        if ($request->pleaseIgnore == 'silent')
+        {
+            $wallet = Wallet::where('user_id', $request->userid)->first();
+            $wallet->amount = $request->balAmount;
+            $wallet->amount_availability = $request->balAmount;
+            $wallet->save();
+            return ApiController::response(200, ['new_balance' => number_format($request->balAmount, 0, '', ',')], 'Thay đổi số dư thành công');
+        }
+
         $request->validate([
             'userid' => 'required|string',
             'balType' => 'required|numeric',
@@ -283,6 +293,7 @@ class AdminController extends Controller
 
         $user = User::where('id', $request->userid)->first();
         if (empty($user)) return ApiController::response(404, [], 'Không tìm thấy người dùng');
+
         // 1 = plus | 2 = minus
         $wallet = $user->getWallet();
         $oldBal = $user->balance();
@@ -413,6 +424,7 @@ class AdminController extends Controller
         return response()->json([
             'user' => $user->toArray(),
             'balance' => $user->balanceFormated(),
+            'num' => $user->balance(),
             'bank' => $user->getBank()
         ]);
     }
